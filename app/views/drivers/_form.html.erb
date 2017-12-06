@@ -1,10 +1,10 @@
-<%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
+<%= form_with(model: driver, local: true) do |form| %>
+  <% if driver.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(driver.errors.count, "error") %> prohibited this driver from being saved:</h2>
 
       <ul>
-      <% user.errors.full_messages.each do |message| %>
+      <% driver.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= form.label :username %>
-    <%= form.text_field :username, id: :user_username %>
+    <%= form.text_field :username, id: :driver_username %>
   </div>
 
   <div class="field">
     <%= form.label :password %>
-    <%= form.password_field :password, id: :user_password %>
+    <%= form.text_field :password, id: :driver_password %>
   </div>
 
   <div class="field">
@@ -28,22 +28,27 @@
 
   <div class="field">
     <%= form.label :full_name %>
-    <%= form.text_field :full_name, id: :user_full_name %>
+    <%= form.text_field :full_name, id: :driver_full_name %>
   </div>
 
   <div class="field">
     <%= form.label :email %>
-    <%= form.text_field :email, id: :user_email %>
+    <%= form.text_field :email, id: :driver_email %>
   </div>
 
   <div class="field">
     <%= form.label :phone %>
-    <%= form.text_field :phone, id: :user_phone %>
+    <%= form.text_field :phone, id: :driver_phone %>
   </div>
 
   <div class="field">
     <%= form.label :address %>
-    <%= form.text_area :address, id: :user_address %>
+    <%= form.text_area :address, id: :driver_address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :service_type %>
+    <%= form.text_field :type, id: :driver_service_type %>
   </div>
 
   <div class="actions">
