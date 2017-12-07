@@ -5,5 +5,6 @@ class Driver < ApplicationRecord
   validates :username, uniqueness: true
   validates :password, presence: true, on: :create
   validates :password, length: {minimum: 4}, allow_blank: true
+  validates :phone, numericality: true
   
 end

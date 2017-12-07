@@ -3,9 +3,9 @@
     <p id="notice"><%= flash[:alert] %></p>
   <% end %>
 
-  <%= form_tag("/login", method: "post") do %>
+  <%= form_tag("/login_driver", method: "post") do %>
     <fieldset>
-      <legend>User log in</legend>
+      <legend>Driver log in</legend>
 
       <div>
         <%= label_tag :username, 'username' %>

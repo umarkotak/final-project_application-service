@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'sessions#new'
+  root 'sessions#new' 
 
   resources :drivers
   resources :users
@@ -8,8 +8,8 @@ Rails.application.routes.draw do
     get 'login' => :new
     post 'login' => :create
 
-    get 'login_admin' => :new_admin
-    post 'login_admin' => :create_admin    
+    get 'login_driver' => :new_driver
+    post 'login_driver' => :create_driver    
 
     delete 'logout' => :destroy
   end

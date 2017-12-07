@@ -15,14 +15,22 @@
     </div>
     <div id="columns">
       <div id="side">
-        <h4>Option</h4>
-        
         <h4>Menu</h4>     
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/dashboard">Dashboard</a></li>
-          <li><a href="/admin">Admin</a></li>          
+          <!-- <li><a href="/">Home</a></li>         -->
         </ul>
+
+        <% if session[:user_id] %>
+          <ul>
+            <li>Logged In</li>
+            <li> </li>
+            <li><%= button_to 'Logout', logout_path, method: :delete %></li>
+          </ul>
+        <% else %>
+          <ul>
+            <li><a href="/">Login</a></li>  
+          </ul>
+        <% end %>
 
         <h4>All Models</h4>
         <ul>
