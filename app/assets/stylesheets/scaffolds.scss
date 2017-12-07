@@ -1,3 +1,4 @@
+@import "style.scss";
 
 body {
   background-color: #fff;
@@ -82,4 +83,8 @@ div {
 
 label {
   display: block;
+}
+
+.foods, .buyers, .admin, .restaurants {
+  @extend .style;
 }

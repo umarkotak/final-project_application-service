@@ -1,0 +1,155 @@
+body, body > p, body > ol, body > ul, body > td {margin: 5px !important}
+
+#banner {
+  position: relative;
+  min-height: 40px;
+  background: #005c99;
+  padding: 10px;
+  border-bottom: 2px solid;
+  font: small-caps 40px/40px "Times New Roman", serif;
+  color: #282;
+  text-align: center;
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 60px;
+    width: 235px;
+  }
+}
+
+#notice:empty {
+  display: none;
+}
+
+#columns {
+  background: #99ccff;
+  display: flex;
+
+  #main {
+    padding: 1em;
+    background: white;
+    flex: 1;
+    width: 100%;
+  }
+
+  #side {
+    padding: 0;
+    background: #99ccff;
+    width: 235px;
+
+    ul {
+      padding: 0;
+
+      li {
+        list-style: none;
+        background-color: #0099e6;
+        padding: 1px;
+
+        a:link, a:visited {
+          background-color: #0099e6;
+          color: white;
+          padding: 2px;
+          width: 235px;
+          text-align: left;
+          text-decoration: none;
+          display: inline-block;
+        }
+
+        a:hover, a:active {
+          background-color: red;
+        }
+      }
+    }
+  }
+}
+
+p, div.tags_line {
+  margin-left: 100px;
+  margin-top: 0.5em;
+  margin-bottom: 0.8em;
+}
+
+.tags-strip {
+  background-color: LightGrey;
+  border-radius: 5px;
+  padding: 3px 10px;
+  font-size: 12px;
+}
+
+@media all and (max-width: 800px) {
+  #columns {
+    flex-direction: column-reverse;
+  }
+}
+
+@media all and (max-width: 500px) {
+  #banner {
+    height: 1em;
+  }
+
+  #banner .title {
+    display: none;
+  }
+}
+
+.style {
+  table {
+    border-collapse: collapse;
+  }
+
+  table tr {
+    border: solid #0080ff;
+  }
+  table tr td {
+    padding: 5px;
+    vertical-align: top;
+  }
+
+  .list_image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .list_description {
+    width: 400px;
+    
+    dl {
+      margin: 0;
+    }
+
+    dt {
+      color: #244;
+      font-weight: bold;
+      font-size: larger;
+    }
+
+    dd {
+      margin: 0;
+    }
+  }
+
+  .list_action {
+    font-size: x-small;
+    font-align: right;
+    padding-left: 1em;
+  }
+
+  .list_line_even {
+    background: #d9dbdd;
+  }
+
+  .list_line_odd {
+    background: #b7cfe8;
+  }
+}
+
+.linker a.linker:hover {
+  background-color: black;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
