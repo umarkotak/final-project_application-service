@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authorize, only:[:create, :new]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :topup, :set_topup]
+  before_action :authenticate, only: [:show, :edit]
 
   # GET /users
   # GET /users.json
@@ -61,14 +63,36 @@ class UsersController < ApplicationController
     end
   end
 
+  def topup
+  end
+
+  def set_topup
+    res = @user.topup(params[:topup_amount])
+    puts "AAAAAA #{params[:topup_amount]}"
+    respond_to do |format|
+      if @user.save && res
+        format.html { redirect_to topup_user_path, notice: 'Top up success.' }
+        format.json { render :show, status: :created, location: @user }
+      else
+        format.html { redirect_to topup_user_path, notice: 'Top up failed: amount is invalid' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
-    end
+    end  
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :password, :password_confirmation, :full_name, :email, :phone, :address, :credit)
+      params.require(:user).permit(:username, :password, :password_confirmation, :full_name, :email, :phone, :address, :credit, :topup_amount)
+    end
+
+    def authenticate
+      @user = User.find(params[:id])
+      redirect_to user_path(session[:user_id]) if @user.id != session[:user_id] 
     end
 end

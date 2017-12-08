@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
   root 'sessions#new' 
 
-  resources :drivers
-  resources :users
-
   controller :sessions do
     get 'login' => :new
     post 'login' => :create
@@ -12,6 +9,14 @@ Rails.application.routes.draw do
     post 'login_driver' => :create_driver    
 
     delete 'logout' => :destroy
+  end
+
+  resources :drivers
+  resources :users do
+    member do
+      get 'topup'
+      patch 'topup' => :set_topup
+    end
   end
 
 end

@@ -22,7 +22,8 @@
 
         <% if session[:user_id] %>
           <ul>
-            <li>Logged In</li>
+            <li><b>Credit : </b> <%= number_to_currency(@logged_user.credit, unit: "Rp. ", delimiter: ".", separator: ",") %> </li>
+            <li><%= link_to 'My Profile', user_path(session[:user_id]) %></a></li>
             <li> </li>
             <li><%= button_to 'Logout', logout_path, method: :delete %></li>
           </ul>
