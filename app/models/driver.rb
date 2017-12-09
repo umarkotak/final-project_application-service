@@ -10,7 +10,7 @@ class Driver < ApplicationRecord
     with: /.+@.+\..+/i,
     message: 'email format is invalid'
   }
-  validates :service_type, inclusion: { in: %w(gojek gocar), message: "%{value} is not a valid unit"  }
+  validates :service_type, inclusion: { in: %w(gojek gocar), message: "%{value} is not a valid service type"  }
 
 
   def topup(amount)

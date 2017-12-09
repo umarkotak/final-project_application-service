@@ -1,6 +1,6 @@
 class DriversController < ApplicationController
   skip_before_action :authorize, only:[:create, :new]
-  before_action :set_driver, only: [:show, :edit, :update, :destroy]
+  before_action :set_driver, only: [:show, :edit, :update, :destroy, :topup, :set_topup]
   before_action :authenticate, only: [:show, :edit]
 
   # GET /drivers
@@ -67,15 +67,15 @@ class DriversController < ApplicationController
   end
 
   def set_topup
-    res = @user.topup(params[:topup_amount])
+    res = @driver.topup(params[:topup_amount])
     
     respond_to do |format|
-      if @user.save && res
-        format.html { redirect_to topup_user_path, notice: 'Top up success.' }
-        format.json { render :show, status: :created, location: @user }
+      if @driver.save && res
+        format.html { redirect_to topup_driver_path, notice: 'Top up success.' }
+        format.json { render :show, status: :created, location: @driver }
       else
-        format.html { redirect_to topup_user_path, notice: 'Top up failed: amount is invalid' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.html { redirect_to topup_driver_path, notice: 'Top up failed: amount is invalid' }
+        format.json { render json: @driver.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -95,7 +95,7 @@ class DriversController < ApplicationController
     def authenticate
       if session[:driver_id]
         redirect_to driver_path(session[:driver_id]) if @driver.id != session[:driver_id]
-      elsif session[:driver_id]
+      elsif session[:user_id]
         redirect_to user_path(session[:user_id])
       end
     end

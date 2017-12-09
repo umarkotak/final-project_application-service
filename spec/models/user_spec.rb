@@ -6,7 +6,6 @@ RSpec.describe User, type: :model do
   end
 
   describe "attributes validation" do
-
     it "is invalid without username" do
       user = build(:user, username: nil)
       user.valid?
@@ -67,7 +66,6 @@ RSpec.describe User, type: :model do
       user.valid?
       expect(user.errors[:phone]).to include("is not a number")
     end
-
   end
 
   describe "top up validation" do
