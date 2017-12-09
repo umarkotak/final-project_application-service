@@ -11,7 +11,13 @@ Rails.application.routes.draw do
     delete 'logout' => :destroy
   end
 
-  resources :drivers
+  resources :drivers do
+    member do
+      get 'topup'
+      patch 'topup' => :set_topup
+    end
+  end
+  
   resources :users do
     member do
       get 'topup'

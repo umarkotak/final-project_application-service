@@ -110,4 +110,45 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe "DELETE #destroy" do
+    it "deletes user from the database" do
+      user = create(:user, username: 'umar1')
+      expect{
+        delete :destroy, params: { id: user }
+      }.to change(User, :count).by(-1)
+    end
+    it "redirects to user#index" do
+      delete :destroy, params: { id: @user }
+      expect(response).to redirect_to users_path
+    end
+  end
+
+  describe "PATCH #set_topup" do
+    context "with valid amount" do
+      it "will add the value of credit with amount" do
+        patch :set_topup, params: { id: @user, topup_amount: 1.0 }
+        @user.reload
+        expect(@user.credit.to_f).to eq(50001.0)
+      end
+
+      it "redirects to top up page" do
+        patch :set_topup, params: { id: @user }
+        expect(response).to redirect_to topup_user_path
+      end
+    end
+
+    context "with invalid amount" do
+      it "will not add the value of credit" do
+        patch :set_topup, params: { id: @user, amount: "1a" }
+        @user.reload
+        expect(@user.credit.to_f).to eq(50000.0)
+      end
+
+      it "redirects to top up page" do
+        patch :set_topup, params: { id: @user }
+        expect(response).to redirect_to topup_user_path
+      end
+    end
+  end
+
 end

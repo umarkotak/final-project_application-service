@@ -21,11 +21,18 @@ class SessionsController < ApplicationController
   end
 
   def create_driver
-    
+    driver = Driver.find_by(username: params[:username])
+    if driver.try(:authenticate, params[:password])
+      session[:driver_id] = driver.id
+      redirect_to drivers_path
+    else
+      redirect_to login_driver_path, alert:"invalid driver/password combination"
+    end
   end
 
   def destroy
     session[:user_id] = nil
+    session[:driver_id] = nil
     redirect_to login_path, notice: "Logged out"
   end
 

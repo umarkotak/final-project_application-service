@@ -68,7 +68,7 @@ class UsersController < ApplicationController
 
   def set_topup
     res = @user.topup(params[:topup_amount])
-    puts "AAAAAA #{params[:topup_amount]}"
+    
     respond_to do |format|
       if @user.save && res
         format.html { redirect_to topup_user_path, notice: 'Top up success.' }
@@ -91,8 +91,12 @@ class UsersController < ApplicationController
       params.require(:user).permit(:username, :password, :password_confirmation, :full_name, :email, :phone, :address, :credit, :topup_amount)
     end
 
+    # current user cannot access another user profile
     def authenticate
-      @user = User.find(params[:id])
-      redirect_to user_path(session[:user_id]) if @user.id != session[:user_id] 
+      if session[:user_id]
+        redirect_to user_path(session[:user_id]) if @user.id != session[:user_id]
+      elsif session[:driver_id]
+        redirect_to driver_path(session[:driver_id])
+      end
     end
 end

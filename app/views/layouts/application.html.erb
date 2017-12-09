@@ -20,16 +20,26 @@
           <!-- <li><a href="/">Home</a></li>         -->
         </ul>
 
-        <% if session[:user_id] %>
+        <% if session[:user_id] && @logged_user %>
           <ul>
+            <li><b>Welcome, </b><%= @logged_user.full_name %></li>
             <li><b>Credit : </b> <%= number_to_currency(@logged_user.credit, unit: "Rp. ", delimiter: ".", separator: ",") %> </li>
             <li><%= link_to 'My Profile', user_path(session[:user_id]) %></a></li>
             <li> </li>
             <li><%= button_to 'Logout', logout_path, method: :delete %></li>
           </ul>
+        <% elsif session[:driver_id] && @logged_driver %>
+          <ul>
+            <li><b>Welcome, </b><%= @logged_driver.full_name %></li>
+            <li><b>Credit : </b> <%= number_to_currency(@logged_driver.credit, unit: "Rp. ", delimiter: ".", separator: ",") %> </li>
+            <li><%= link_to 'My Profile', driver_path(session[:driver_id]) %></a></li>
+            <li> </li>
+            <li><%= button_to 'Logout', logout_path, method: :delete %></li>
+          </ul>
         <% else %>
           <ul>
-            <li><a href="/">Login</a></li>  
+            <li><a href="/login">Login</a></li>
+            <li><a href="/login_driver">Login Driver</a></li>
           </ul>
         <% end %>
 
@@ -37,6 +47,7 @@
         <ul>
           <li><a href="/users">User</a></li>
           <li><a href="/drivers">Driver</a></li>
+          
         </ul>
       </div>
 
