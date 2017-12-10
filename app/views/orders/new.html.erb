@@ -2,13 +2,13 @@
 
 <h1>New Orders</h1>
 
-<%= form_with(model: order, local: true) do |form| %>
-  <% if order.errors.any? %>
+<%= form_for @order, url: {action: 'confirm_order'} do |form| %>
+  <% if @order.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
       <ul>
-      <% order.errors.full_messages.each do |message| %>
+      <% @order.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -16,33 +16,18 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :username %>
-    <%= form.text_field :username, id: :user_username %>
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id, id: :order_user_id, value: @user.id, :readonly   => true  %>
   </div>
 
   <div class="field">
-    <%= form.label :password_confirmation, 'confirm:' %>
-    <%= form.password_field :password_confirmation %>
+    <%= form.label :origin %>
+    <%= form.text_area :origin, id: :order_origin %>
   </div>
 
   <div class="field">
-    <%= form.label :full_name %>
-    <%= form.text_field :full_name, id: :user_full_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, id: :user_email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :phone %>
-    <%= form.text_field :phone, id: :user_phone %>
-  </div>
-
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_area :address, id: :user_address %>
+    <%= form.label :destination %>
+    <%= form.text_area :destination, id: :order_destination %>
   </div>
 
   <div class="actions">

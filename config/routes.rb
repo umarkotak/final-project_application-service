@@ -26,5 +26,6 @@ Rails.application.routes.draw do
   end
 
   resources :orders
+  post '/orders/confirm_order' => 'orders#confirm_order'
 
 end

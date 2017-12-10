@@ -7,20 +7,39 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create!(
-  username: 'umarkotak',
+  username: 'user1',
   password: 'umarkotak',
-  full_name: 'umar kotak',
-  email: 'umarkotak@email.com',
+  full_name: 'user1 fullname',
+  email: 'user1@email.com',
   phone: '01',
   address: 'address 1'
 )
 
+User.create!(
+  username: 'user2',
+  password: 'umarkotak',
+  full_name: 'user2 fullname',
+  email: 'user2@email.com',
+  phone: '02',
+  address: 'address 2'
+)
+
 Driver.create!(
   username: 'driver1',
-  password: 'driver1',
-  full_name: 'driver 1',
+  password: 'umarkotak',
+  full_name: 'driver1 fullname',
   email: 'driver1@email.com',
   phone: '001',
   address: 'driver address 1',
+  service_type: 'gojek'
+)
+
+Driver.create!(
+  username: 'driver2',
+  password: 'umarkotak',
+  full_name: 'driver2 fullname',
+  email: 'driver2@email.com',
+  phone: '002',
+  address: 'driver address 2',
   service_type: 'gojek'
 )

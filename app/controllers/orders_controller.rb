@@ -4,11 +4,16 @@ class OrdersController < ApplicationController
   end
 
   def new
+    @order = Order.new
     @user = User.find(session[:user_id])
   end
 
-  def create
+  def confirm_order
     
+  end
+
+  def create
+    redirect_to orders_path
   end
 
   private
