@@ -9,7 +9,16 @@ class OrdersController < ApplicationController
   end
 
   def confirm_order
-    
+    @order = Order.new(order_params)
+    @origin = {
+      :lat => "lat",
+      :lng => "lng"
+    }
+
+    @destination = {
+      :lat => "lat",
+      :lng => "lng"
+    }
   end
 
   def create
@@ -17,4 +26,11 @@ class OrdersController < ApplicationController
   end
 
   private
+    def set_order
+      @order = Order.find(params[:id])
+    end
+
+    def order_params
+      params.require(:order).permit(:user_id, :driver_id, :origin, :destination, :distance, :service_type, :payment_type, :price, :status)
+    end
 end

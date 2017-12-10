@@ -1,1 +1,51 @@
 <h1>Confirm Order</h1>
+
+<%= form_for @order, url: {action: 'create'} do |form| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% @order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id, id: :order_user_id, :readonly   => true  %>
+  </div>
+
+  <table>
+    <tr>
+      <td>
+        <div class="field" style="border: 1px solid black; padding: 5px;">
+          <p><b>Origin : </b></p>
+          <%= form.text_area :origin, id: :order_origin, :readonly   => true %>
+          <p><b>Coordinate :</b></p>
+          <p>Lat : <%= @origin[:lat] %></p>
+          <p>Lng : <%= @origin[:lng] %></p>
+        </div>
+      </td>
+
+      <td>
+        <div class="field" style="border: 1px solid black; padding: 5px;">
+          <p><b>Destination : </b></p>
+          <%= form.text_area :destination, id: :order_destination, :readonly   => true %>
+          <p><b>Coordinate :</b></p>
+          <p>Lat : <%= @destination[:lat] %></p>
+          <p>Lng : <%= @destination[:lat] %></p>
+        </div>
+      </td>
+    </tr>
+  </table>
+  
+
+  
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
