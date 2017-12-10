@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>New Orders</h1>
+
+<%= form_with(model: order, local: true) do |form| %>
+  <% if order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :username %>
+    <%= form.text_field :username, id: :user_username %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password_confirmation, 'confirm:' %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+  <div class="field">
+    <%= form.label :full_name %>
+    <%= form.text_field :full_name, id: :user_full_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :user_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :phone %>
+    <%= form.text_field :phone, id: :user_phone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_area :address, id: :user_address %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

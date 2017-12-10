@@ -25,4 +25,6 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :orders
+
 end
