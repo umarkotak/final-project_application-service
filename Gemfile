@@ -8,6 +8,7 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
+# gem 'rails', '~> 4'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 gem 'pg'
@@ -47,8 +48,11 @@ gem 'groupdate'
 # Google maps service
 gem 'google_maps_service'
 
-# Wrest for making htpp request
-gem 'wrest'
+# For http request
+gem 'http'
+
+# Active Support runtime dependencies
+# gem 'activesupport', '~> 4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

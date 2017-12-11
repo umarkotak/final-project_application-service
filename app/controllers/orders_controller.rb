@@ -10,15 +10,13 @@ class OrdersController < ApplicationController
 
   def confirm_order
     @order = Order.new(order_params)
-    @origin = {
-      :lat => "lat",
-      :lng => "lng"
-    }
+    @origin = @order.get_coordinate(@origin)
 
     @destination = {
       :lat => "lat",
       :lng => "lng"
     }
+
   end
 
   def create
