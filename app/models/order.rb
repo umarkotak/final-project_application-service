@@ -36,6 +36,11 @@ class Order < ApplicationRecord
     status
   end
 
+  def show_available_drivers
+    drivers = Driver.joins(:driver_locations)
+    drivers.where("driver_locations.status = 'online'").where("drivers.service_type = '#{self.service_type}'")
+  end
+
   private
 
 end

@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20171211035724) do
 
   create_table "driver_locations", force: :cascade do |t|
     t.bigint "driver_id"
+    t.text "location"
     t.decimal "lat"
     t.decimal "lng"
     t.string "status"

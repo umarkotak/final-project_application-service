@@ -6,6 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.delete_all
+Driver.delete_all
+DriverLocation.delete_all
+
 User.create!(
   username: 'user1',
   password: 'umarkotak',
@@ -41,5 +45,35 @@ Driver.create!(
   email: 'driver2@email.com',
   phone: '002',
   address: 'driver address 2',
+  service_type: 'gojek'
+)
+
+Driver.create!(
+  username: 'driver3',
+  password: 'umarkotak',
+  full_name: 'driver3 fullname',
+  email: 'driver3@email.com',
+  phone: '002',
+  address: 'driver address 3',
+  service_type: 'gojek'
+)
+
+Driver.create!(
+  username: 'driver4',
+  password: 'umarkotak',
+  full_name: 'driver4 fullname',
+  email: 'driver4@email.com',
+  phone: '002',
+  address: 'driver address 4',
+  service_type: 'gojek'
+)
+
+Driver.create!(
+  username: 'driver5',
+  password: 'umarkotak',
+  full_name: 'driver5 fullname',
+  email: 'driver5@email.com',
+  phone: '002',
+  address: 'driver address 5',
   service_type: 'gojek'
 )

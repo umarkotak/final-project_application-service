@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
 
   def confirm_order
     @order = Order.new(order_params)
+    @drivers = @order.show_available_drivers
 
     if @order.calculate_data(@order.origin, @order.destination)
       @origin = @order.get_coordinate(@order.origin)

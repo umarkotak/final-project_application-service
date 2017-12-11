@@ -24,7 +24,7 @@
       <td>
         <div class="field" style="border: 1px solid black; padding: 5px;">
           <p><b>Origin : </b></p>
-          <%= form.text_area :origin, id: :order_origin, :readonly   => true %>
+          <p><%= @order.origin %></p>
           <p><b>Coordinate :</b></p>
           <p>Lat : <%= @origin[:lat] %></p>
           <p>Lng : <%= @origin[:lng] %></p>
@@ -34,7 +34,7 @@
       <td>
         <div class="field" style="border: 1px solid black; padding: 5px;">
           <p><b>Destination : </b></p>
-          <%= form.text_area :destination, id: :order_destination, :readonly   => true %>
+          <p><%= @order.destination %></p>
           <p><b>Coordinate :</b></p>
           <p>Lat : <%= @destination[:lat] %></p>
           <p>Lng : <%= @destination[:lng] %></p>
@@ -44,13 +44,23 @@
       <td>
         <div class="field" style="border: 1px solid black; padding: 5px;">
           <p><b>Service Type : </b><%= @order.service_type %></p>
-          <p><b>Payment Type : </b><%= @order.payment_type %></p>
-          <p><b>Approx Distance : </b><%= @order.distance %> m</p>
-          <p><b>Approx Price : </b><%= number_to_currency(@order.price, unit: "Rp. ", delimiter: ".", separator: ",") %></p>
+          <p><b>Distance : </b><%= @order.distance %> m</p>
+          <p><b>Price : </b><%= number_to_currency(@order.price, unit: "Rp. ", delimiter: ".", separator: ",") %></p>
         </div>
+      </td>
+
+      <td>
+        <% @drivers.each do |driver| %>
+          <%= driver.username %>
+        <% end %>
       </td>
     </tr>
   </table>
+
+    <div class="field">
+      <%= form.label :payment_type %>
+      <%= form.select(:payment_type, [['cash','cash'], ['gopay','gopay']]) %>
+    </div>
 
     <div class="actions">
       <%= form.submit %>

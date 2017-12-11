@@ -33,7 +33,7 @@ RSpec.describe DriversController, type: :controller do
     end
 
     it "redirect to @driver if driver try to show another driver" do
-      driver1 = create(:driver, username: "driver2")
+      driver1 = create(:driver, username: "driver200")
       get :show, params: { id: driver1 }
       expect(response).to redirect_to(@driver)
     end
