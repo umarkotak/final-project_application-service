@@ -10,12 +10,14 @@ class OrdersController < ApplicationController
 
   def confirm_order
     @order = Order.new(order_params)
-    @origin = @order.get_coordinate(@origin)
 
-    @destination = {
-      :lat => "lat",
-      :lng => "lng"
-    }
+    if @order.calculate_data(@order.origin, @order.destination)
+      @origin = @order.get_coordinate(@order.origin)
+      @destination = @order.get_coordinate(@order.destination)
+      @status = true
+    else
+      @status = false
+    end
 
   end
 

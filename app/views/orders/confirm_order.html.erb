@@ -18,8 +18,9 @@
     <%= form.text_field :user_id, id: :order_user_id, :readonly   => true  %>
   </div>
 
+  <% if @status %>
   <table>
-    <tr>
+    <tr valign="top">
       <td>
         <div class="field" style="border: 1px solid black; padding: 5px;">
           <p><b>Origin : </b></p>
@@ -36,16 +37,30 @@
           <%= form.text_area :destination, id: :order_destination, :readonly   => true %>
           <p><b>Coordinate :</b></p>
           <p>Lat : <%= @destination[:lat] %></p>
-          <p>Lng : <%= @destination[:lat] %></p>
+          <p>Lng : <%= @destination[:lng] %></p>
+        </div>
+      </td>
+
+      <td>
+        <div class="field" style="border: 1px solid black; padding: 5px;">
+          <p><b>Service Type : </b><%= @order.service_type %></p>
+          <p><b>Payment Type : </b><%= @order.payment_type %></p>
+          <p><b>Approx Distance : </b><%= @order.distance %> m</p>
+          <p><b>Approx Price : </b><%= number_to_currency(@order.price, unit: "Rp. ", delimiter: ".", separator: ",") %></p>
         </div>
       </td>
     </tr>
   </table>
-  
 
-  
+    <div class="actions">
+      <%= form.submit %>
+    </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <% else %>
+    <p>Location Invalid</p>
+    <%= link_to "New Order", new_order_path %>
+    <br>
+  <% end %>  
+
+  <br>
 <% end %>
