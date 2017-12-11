@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   def index
-    
+    @orders = Order.all
   end
 
   def new
@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
 
   def confirm_order
     @order = Order.new(order_params)
-    @drivers = @order.show_available_drivers
+    @driver = @order.show_available_drivers
 
     if @order.calculate_data(@order.origin, @order.destination)
       @origin = @order.get_coordinate(@order.origin)
@@ -19,11 +19,18 @@ class OrdersController < ApplicationController
     else
       @status = false
     end
-
   end
 
   def create
-    redirect_to orders_path
+    @order = Order.new(order_params)
+    @order.calculate_data(@order.origin, @order.destination)
+    @order.status = 'on_progress'
+
+    if @order.save
+      redirect_to orders_path
+    else
+
+    end
   end
 
   private

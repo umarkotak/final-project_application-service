@@ -1,7 +1,8 @@
 class DriverLocation < ApplicationRecord
   belongs_to :driver
 
-  validates :driver_id, :location, :status, presence: true
+  validates :driver_id, :location, :lat, :lng, :status, presence: true
+  validates :status, inclusion: { in: %w(online offline busy), message: "%{value} is not a valid status type"  }
   validate :validate_location
 
   def get_coordinate(location_name)
@@ -14,7 +15,7 @@ class DriverLocation < ApplicationRecord
 
   private
     def validate_location
-      if location != ""
+      if location != nil && location != ''
         # Setup API keys
         gmaps = GoogleMapsService::Client.new(key: 'AIzaSyBtGoQM9mdzHQiyjcxpxfJmSfjK0rUbGEI')
         distance_matrix = gmaps.distance_matrix(location, location)

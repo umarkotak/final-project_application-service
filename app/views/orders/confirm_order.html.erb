@@ -43,6 +43,7 @@
 
       <td>
         <div class="field" style="border: 1px solid black; padding: 5px;">
+          <p><b>Order Details : </b></p>
           <p><b>Service Type : </b><%= @order.service_type %></p>
           <p><b>Distance : </b><%= @order.distance %> m</p>
           <p><b>Price : </b><%= number_to_currency(@order.price, unit: "Rp. ", delimiter: ".", separator: ",") %></p>
@@ -50,9 +51,12 @@
       </td>
 
       <td>
-        <% @drivers.each do |driver| %>
-          <%= driver.username %>
-        <% end %>
+        <div class="field" style="border: 1px solid black; padding: 5px;">
+          <p><b>Driver Information : </b></p>
+          <p><b>ID : </b><%= @driver.id %></p>
+          <p><b>Name : </b><%= @driver.full_name %></p>
+          <p><b>Phone : </b><%= @driver.phone %></p>
+        </div>
       </td>
     </tr>
   </table>
@@ -62,12 +66,19 @@
       <%= form.select(:payment_type, [['cash','cash'], ['gopay','gopay']]) %>
     </div>
 
+    <div>
+      <%= hidden_field(:order, :driver_id, :value => @driver.id) %>
+      <%= hidden_field(:order, :origin, :value => @order.origin) %>
+      <%= hidden_field(:order, :destination, :value => @order.destination) %>
+      <%= hidden_field(:order, :service_type, :value => @order.service_type) %>
+    </div>
+
     <div class="actions">
       <%= form.submit %>
     </div>
 
   <% else %>
-    <p>Location Invalid</p>
+    <p><b>Location is Invalid</b></p>
     <%= link_to "New Order", new_order_path %>
     <br>
   <% end %>  
