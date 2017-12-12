@@ -17,9 +17,13 @@ class OrdersController < ApplicationController
     if route_status
       @order.set_distance(route_status)
       @order.set_price
+      @order.user_id = session[:user_id]
+      @order.driver_id = @driver.try(:id)
 
       @origin = @order.get_coordinate(@order.origin)
       @destination = @order.get_coordinate(@order.destination)
+
+      session[:temp_data] = @order
 
       @status = true
     else
@@ -28,8 +32,12 @@ class OrdersController < ApplicationController
   end
 
   def create
+    @temp_data = session[:temp_data]
     @order = Order.new(order_params)
-    @order.status = 'on_progress'
+    @order.set_order_data(@temp_data)
+
+    puts "DATA TEST #{@temp_data.to_json}"
+    puts "DATA TEST #{@order.to_json}"
 
     @driver_location = DriverLocation.find_by(driver_id: @order.driver_id)
     @driver_location.status = 'busy'
@@ -38,6 +46,7 @@ class OrdersController < ApplicationController
     @driver_location.order_id = @order.id
     @driver_location.save
 
+    session[:temp_data] = nil
     redirect_to orders_path
   end
 

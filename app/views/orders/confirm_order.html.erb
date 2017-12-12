@@ -3,11 +3,10 @@
 <%= form_for @order, url: {action: 'create'} do |form| %>
   <div class="field">
     <p><b>User ID : </b><%= session[:user_id] %></p>
-    <%= hidden_field(:order, :user_id, :value => session[:user_id]) %>
   </div>
 
   <fieldset>
-    <% if @status %>
+    <% if @status && @driver %>
     <table>
       <tr valign="top">
         <td>
@@ -17,7 +16,6 @@
             <p><b>Coordinate :</b></p>
             <p>Lat : <%= @origin[:lat] %></p>
             <p>Lng : <%= @origin[:lng] %></p>
-            <%= hidden_field(:order, :origin, :value => @order.origin) %>
           </div>
         </td>
 
@@ -28,7 +26,6 @@
             <p><b>Coordinate :</b></p>
             <p>Lat : <%= @destination[:lat] %></p>
             <p>Lng : <%= @destination[:lng] %></p>
-            <%= hidden_field(:order, :destination, :value => @order.destination) %>
           </div>
         </td>
 
@@ -36,13 +33,10 @@
           <div class="field" style="border: 1px solid black; padding: 5px;">
             <p><b>Order Details : </b></p>
             <p><b>Service Type : </b><%= @order.service_type %></p>
-            <%= hidden_field(:order, :service_type, :value => @order.service_type) %>
 
             <p><b>Distance : </b><%= @order.distance %> m</p>
-            <%= hidden_field(:order, :distance, :value => @order.distance) %>
-            
+
             <p><b>Price : </b><%= number_to_currency(@order.price, unit: "Rp. ", delimiter: ".", separator: ",") %></p>
-            <%= hidden_field(:order, :price, :value => @order.price) %>
           </div>
         </td>
 
@@ -53,7 +47,6 @@
               <p><b>ID : </b><%= @driver.id %></p>
               <p><b>Name : </b><%= @driver.full_name %></p>
               <p><b>Phone : </b><%= @driver.phone %></p>
-              <%= hidden_field(:order, :driver_id, :value => @driver.id) %>
             <% else %>
               <p>Your driver is unavailable at the moment</p>
             <% end %>
@@ -70,6 +63,11 @@
       <div class="actions">
         <%= form.submit %>
       </div>
+
+    <% elsif @status %>
+      <p><b>Your Driver is Unavailable at The Moment</b></p>
+      <%= link_to "New Order", new_order_path %>
+      <br>
 
     <% else %>
       <p><b>Location is Invalid</b></p>

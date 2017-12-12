@@ -41,10 +41,21 @@ class Order < ApplicationRecord
     end
   end
 
+  def set_order_data(temp_data)
+    self.user_id      = temp_data["user_id"]
+    self.driver_id    = temp_data["driver_id"]
+    self.origin       = temp_data["origin"]
+    self.destination  = temp_data["destination"]
+    self.distance     = temp_data["distance"]
+    self.service_type = temp_data["service_type"]
+    self.price        = temp_data["price"]
+    self.status       = 'on_process'
+  end
+
   def get_available_drivers
     drivers = Driver.joins(:driver_locations)
     drivers = drivers.where("driver_locations.status = 'online'").where("drivers.service_type = '#{self.service_type}'")
-    
+
     drivers.order("RANDOM()").first
   end
 
