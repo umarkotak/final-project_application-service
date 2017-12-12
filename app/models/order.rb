@@ -13,33 +13,39 @@ class Order < ApplicationRecord
     result
   end
 
-  def calculate_data(origin, destination)
-    origin = 'empty' if origin == ''
-    destination = 'empty' if destination == ''
+  def validate_route(origin, destination)
+    status = true
+    begin
+      gmaps = GoogleMapsService::Client.new(key: 'AIzaSyBtGoQM9mdzHQiyjcxpxfJmSfjK0rUbGEI')
+      distance_matrix = gmaps.distance_matrix(origin, destination)
 
-    gmaps = GoogleMapsService::Client.new(key: 'AIzaSyBtGoQM9mdzHQiyjcxpxfJmSfjK0rUbGEI')
-    distance_matrix = gmaps.distance_matrix(origin, destination)
-    status = distance_matrix[:rows][0][:elements][0][:status]
+      status = false if distance_matrix[:rows][0][:elements][0][:status] == "NOT_FOUND"
 
-    status == "NOT_FOUND" ? status = false : status = true
-
-    if status
-      distance = distance_matrix[:rows][0][:elements][0][:distance][:value] / 1000.0
-      self.distance = distance.to_f.round(2)
-
-      if self.service_type == 'gojek'
-        self.price = 1500 * self.distance
-      else
-        self.price = 2500 * self.distance
-      end
+      status = distance_matrix
+    rescue
+      status = false
     end
 
     status
   end
 
-  def show_available_drivers
+  def set_distance(distance_matrix)
+    distance = distance_matrix[:rows][0][:elements][0][:distance][:value] / 1000.0
+    self.distance = distance.to_f.round(2)
+  end
+
+  def set_price
+    if self.service_type == 'gojek'
+      self.price = 1500 * self.distance
+    elsif self.service_type == 'gocar'
+      self.price = 2500 * self.distance
+    end
+  end
+
+  def get_available_drivers
     drivers = Driver.joins(:driver_locations)
     drivers = drivers.where("driver_locations.status = 'online'").where("drivers.service_type = '#{self.service_type}'")
+    
     drivers.order("RANDOM()").first
   end
 

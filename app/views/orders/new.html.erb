@@ -2,40 +2,41 @@
 
 <h1>New Orders</h1>
 
-<%= form_for @order, url: {action: 'confirm_order'} do |form| %>
-  <% if @order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+<fieldset>
+  <%= form_for @order, url: {action: 'confirm_order'} do |form| %>
+    <% if @order.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
-      <ul>
-      <% @order.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% @order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <p><b>User ID : </b><%= session[:user_id] %></p>
+    </div>
+
+    <div class="field">
+      <b><%= form.label :origin %></b>
+      <%= form.text_area :origin, id: :order_origin %>
+    </div>
+
+    <div class="field">
+      <b><%= form.label :destination %></b>
+      <%= form.text_area :destination, id: :order_destination %>
+    </div>
+
+    <div class="field">
+      <%= form.label :service_type %>
+      <%= form.select(:service_type, [['gojek','gojek'], ['gocar','gocar']]) %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id, id: :order_user_id, value: @user.id, :readonly   => true  %>
-  </div>
-
-  <div class="field">
-    <%= form.label :origin %>
-    <%= form.text_area :origin, id: :order_origin %>
-  </div>
-
-  <div class="field">
-    <%= form.label :destination %>
-    <%= form.text_area :destination, id: :order_destination %>
-  </div>
-
-  <div class="field">
-    <%= form.label :service_type %>
-    <%= form.select(:service_type, [['gojek','gojek'], ['gocar','gocar']]) %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</fieldset>

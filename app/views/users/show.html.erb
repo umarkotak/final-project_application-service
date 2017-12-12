@@ -1,44 +1,40 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
-  <strong>Full name:</strong>
-  <%= @user.full_name %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @user.phone %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @user.address %>
-</p>
-
-<p>
-  <strong>Credit:</strong>
-  <%= @user.credit %>
-</p>
+<h1>My Profile</h1>
+<table border="1">
+  <tr>
+    <td><strong>Username:</strong></td>
+    <td><%= @user.username %></td>
+  </tr>
+  <tr>
+    <td><strong>Full name:</strong></td>
+    <td><%= @user.full_name %></td>
+  </tr>
+  <tr>
+    <td><strong>Email:</strong></td>
+    <td><%= @user.email %></td>
+  </tr>
+  <tr>
+    <td><strong>Phone:</strong></td>
+    <td><%= @user.phone %></td>
+  </tr>
+  <tr>
+    <td><strong>Address:</strong></td>
+    <td><%= @user.address %></td>
+  </tr>
+  <tr>
+    <td><strong>Credit:</strong></td>
+    <td><%= @user.credit %></td>
+  </tr>
+</table>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Back', users_path %> |
+<%= link_to 'Top Up', topup_user_path(@user) %>
 
-<table>
+<br><br><hr>
+<h1>Order History</h1>
+<table border="1" width="100%">
   <thead>
     <tr>
       <th>ID</th>

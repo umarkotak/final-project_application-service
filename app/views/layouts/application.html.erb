@@ -26,6 +26,7 @@
             <li><b>Welcome, </b><%= @logged_user.full_name %></li>
             <li><b>Credit : </b> <%= number_to_currency(@logged_user.credit, unit: "Rp. ", delimiter: ".", separator: ",") %> </li>
             <li><%= link_to 'My Profile', user_path(session[:user_id]) %></a></li>
+            <li><%= link_to 'Order Go Ride', new_order_path %></li>
             <li> </li>
             <li><%= button_to 'Logout', logout_path, method: :delete %></li>
           </ul>

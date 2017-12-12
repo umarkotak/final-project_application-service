@@ -1,28 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
+<h1>Top Up Credit</h1>
 
-<p>
-  <strong>Current Balance:</strong>
-  <%= @user.credit %>
-</p>
+<fieldset>
+  <p>
+    <strong>Username : </strong>
+    <%= @user.username %>
+  </p>
 
-<%# form_with(model: @user, action: @user, method: "post", local: true) do |form| %>
-<%# form_for @user, url: { action: "set_topup" } do |form| %>
-<%= form_for user_path, method: :patch do |form| %>
-  <fieldset>
-    <legend>Top Up GoPay Credit</legend>
+  <p>
+    <strong>Current Credit : </strong>
+    <%= number_to_currency(@user.credit, unit: "Rp. ", delimiter: ".", separator: ",") %>
+  </p>
+
+  <%= form_for user_path, method: :patch do |form| %>
     <div class="field">
-      <%= form.label :topup_amount %>
-      <%# form.text_field :topup_amount, id: :topup_amount %>
-      <%= text_field_tag :topup_amount, params[:topup_amount] %>
+      <p><strong>Top Up Amount : </strong></p>
+      <p><%= text_field_tag :topup_amount, params[:topup_amount] %></p>
     </div>
 
     <div class="actions">
       <%= form.submit 'Top Up' %>
     </div>
-  </fieldset>
-<% end %>
+  <% end %>
+</fieldset>

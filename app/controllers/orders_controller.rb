@@ -7,16 +7,20 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
-    @user = User.find(session[:user_id])
   end
 
   def confirm_order
-    @order = Order.new(order_params)
-    @driver = @order.show_available_drivers
+    @order  = Order.new(order_params)
+    @driver = @order.get_available_drivers
 
-    if @order.calculate_data(@order.origin, @order.destination)
+    route_status = @order.validate_route(@order.origin, @order.destination)
+    if route_status
+      @order.set_distance(route_status)
+      @order.set_price
+
       @origin = @order.get_coordinate(@order.origin)
       @destination = @order.get_coordinate(@order.destination)
+      
       @status = true
     else
       @status = false
@@ -25,19 +29,22 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
-    @order.calculate_data(@order.origin, @order.destination)
-    @order.status = 'on_progress'
 
-    @driver_location = DriverLocation.find_by(driver_id: @order.driver_id)
-    @driver_location.status = 'busy'
+    route_status = @order.validate_route(@order.origin, @order.destination)
+    if route_status
+      @order.set_distance(route_status)
+      @order.set_price
+      @order.status = 'on_progress'
 
-    if @order.save
-      @driver_location.order_id = @order.id
-      @driver_location.save
-      redirect_to orders_path
-    else
-
+      @driver_location = DriverLocation.find_by(driver_id: @order.driver_id)
+      @driver_location.status = 'busy'
     end
+
+    @order.save
+    @driver_location.order_id = @order.id
+    @driver_location.save
+
+    redirect_to orders_path
   end
 
   def destroy

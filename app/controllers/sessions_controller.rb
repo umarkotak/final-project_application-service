@@ -3,7 +3,6 @@ class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def new
-    
   end
 
   def create
@@ -12,12 +11,11 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to users_path
     else
-      redirect_to login_path, alert:"invalid user/password combination"
+      redirect_to login_path, alert:"invalid username/password combination"
     end
   end
 
   def new_driver
-    
   end
 
   def create_driver
@@ -26,7 +24,7 @@ class SessionsController < ApplicationController
       session[:driver_id] = driver.id
       redirect_to drivers_path
     else
-      redirect_to login_driver_path, alert:"invalid driver/password combination"
+      redirect_to login_driver_path, alert:"invalid driver username/password combination"
     end
   end
 
