@@ -82,7 +82,7 @@ class DriversController < ApplicationController
 
   def job
     @driver_location = DriverLocation.find_by(driver_id: session[:driver_id])
-    @order = Order.find_by(id: @driver_location.order_id)
+    @order = Order.find_by(id: @driver_location.try(:order_id))
 
     @finished_orders = Order.where(driver_id: session[:driver_id])
   end

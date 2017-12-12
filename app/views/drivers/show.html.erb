@@ -1,44 +1,37 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Username:</strong>
-  <%= @driver.username %>
-</p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @driver.password %>
-</p>
-
-<p>
-  <strong>Full name:</strong>
-  <%= @driver.full_name %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @driver.email %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @driver.phone %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @driver.address %>
-</p>
-
-<p>
-  <strong>Type:</strong>
-  <%= @driver.service_type %>
-</p>
-
-<p>
-  <strong>Credit:</strong>
-  <%= @driver.credit %>
-</p>
+<table border="1">
+  <tr>
+    <td><strong>Username:</strong></td>
+    <td><%= @driver.username %></td>
+  </tr>
+  <tr>
+    <td><strong>Full name:</strong></td>
+    <td><%= @driver.full_name %></td>
+  </tr>
+  <tr>
+    <td><strong>Email:</strong></td>
+    <td><%= @driver.email %></td>
+  </tr>
+  <tr>
+    <td><strong>Phone:</strong></td>
+    <td><%= @driver.phone %></td>
+  </tr>
+  <tr>
+    <td><strong>Address:</strong></td>
+    <td><%= @driver.address %></td>
+  </tr>
+  <tr>
+    <td><strong>Service Type:</strong></td>
+    <td><%= @driver.service_type %></td>
+  </tr>
+  <tr>
+    <td><strong>Credit:</strong></td>
+    <td><%= @driver.credit %></td>
+  </tr>
+</table>
 
 <%= link_to 'Edit', edit_driver_path(@driver) %> |
+<%= link_to 'Top Up', topup_driver_path(@driver) %> |
 <%= link_to 'Back', drivers_path %>
+

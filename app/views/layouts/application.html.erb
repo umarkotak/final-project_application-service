@@ -15,16 +15,14 @@
     </div>
     <div id="columns">
       <div id="side">
-        <h4>Menu</h4>     
-        <ul>
-          <!-- <li><a href="/">Home</a></li>         -->
-        </ul>
-
         <% if session[:user_id] && @logged_user %>
           <ul>
             <li><b>USER</b></li>
-            <li><b>Welcome, </b><%= @logged_user.full_name %></li>
+            <li><b>Full Name : </b><%= @logged_user.full_name %></li>
             <li><b>Credit : </b> <%= number_to_currency(@logged_user.credit, unit: "Rp. ", delimiter: ".", separator: ",") %> </li>
+          </ul>
+          <h5>Menu</h5>
+          <ul>
             <li><%= link_to 'My Profile', user_path(session[:user_id]) %></a></li>
             <li><%= link_to 'Order Go Ride', new_order_path %></li>
             <li> </li>
@@ -33,8 +31,11 @@
         <% elsif session[:driver_id] && @logged_driver %>
           <ul>
             <li><b>DRIVER</b></li>
-            <li><b>Welcome, </b><%= @logged_driver.full_name %></li>
+            <li><b>Full Name : </b><%= @logged_driver.full_name %></li>
             <li><b>Credit : </b> <%= number_to_currency(@logged_driver.credit, unit: "Rp. ", delimiter: ".", separator: ",") %> </li>
+          </ul>
+          <h4>Menu</h4>
+          <ul>
             <li><%= link_to 'My Profile', driver_path(session[:driver_id]) %></a></li>
             <li><%= link_to 'My Jobs', job_driver_path(session[:driver_id]) %></a></li>
             <li><%= link_to 'Set Location', driver_locations_path %></li>
@@ -61,8 +62,8 @@
         <%= yield %>
       </div>
 
-      <div id="side">
-      </div>
+      <!-- <div id="side">
+      </div> -->
       
     </div>
   </body>
