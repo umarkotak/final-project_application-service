@@ -35,7 +35,7 @@
 
         <td><%# link_to 'Show', driver_location %></td>
         <td><%# link_to 'Edit', edit_driver_path(driver_location) %></td>
-        <td><%# link_to 'Destroy', driver_location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', order_path(order), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

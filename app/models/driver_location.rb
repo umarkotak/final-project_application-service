@@ -1,5 +1,6 @@
 class DriverLocation < ApplicationRecord
   belongs_to :driver
+  belongs_to :order, optional: true
 
   validates :driver_id, :location, :lat, :lng, :status, presence: true
   validates :status, inclusion: { in: %w(online offline busy), message: "%{value} is not a valid status type"  }

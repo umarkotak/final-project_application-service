@@ -2,6 +2,7 @@ class CreateDriverLocations < ActiveRecord::Migration[5.1]
   def change
     create_table :driver_locations do |t|
       t.belongs_to :driver, index: true
+      t.belongs_to :order, index: true
 
       t.text :location
       t.decimal :lat

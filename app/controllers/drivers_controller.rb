@@ -80,6 +80,30 @@ class DriversController < ApplicationController
     end
   end
 
+  def job
+    @driver_location = DriverLocation.find_by(driver_id: session[:driver_id])
+    @order = Order.find_by(id: @driver_location.order_id)
+
+    @finished_orders = Order.where(driver_id: session[:driver_id])
+  end
+
+  def do_job
+    @driver_location = DriverLocation.find_by(driver_id: session[:driver_id])
+    @order = Order.find_by(id: @driver_location.order_id)
+
+    @driver_location.status = 'online'
+    @driver_location.order_id = nil
+    @order.status = params[:status]
+
+    respond_to do |format|
+      if @driver_location.save && @order.save
+        format.html { redirect_to job_driver_path(session[:driver_id]), notice: 'Order complete' }
+      else
+        format.html { redirect_to job_driver_path(session[:driver_id]), notice: 'Something wrong' }
+      end
+    end    
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_driver

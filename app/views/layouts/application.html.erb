@@ -35,6 +35,7 @@
             <li><b>Welcome, </b><%= @logged_driver.full_name %></li>
             <li><b>Credit : </b> <%= number_to_currency(@logged_driver.credit, unit: "Rp. ", delimiter: ".", separator: ",") %> </li>
             <li><%= link_to 'My Profile', driver_path(session[:driver_id]) %></a></li>
+            <li><%= link_to 'My Jobs', job_driver_path(session[:driver_id]) %></a></li>
             <li><%= link_to 'Set Location', driver_locations_path %></li>
             <li> </li>
             <li><%= button_to 'Logout', logout_path, method: :delete %></li>

@@ -65,7 +65,7 @@ Driver.create!(
   email: 'driver4@email.com',
   phone: '002',
   address: 'driver address 4',
-  service_type: 'gojek'
+  service_type: 'gocar'
 )
 
 Driver.create!(
@@ -75,5 +75,32 @@ Driver.create!(
   email: 'driver5@email.com',
   phone: '002',
   address: 'driver address 5',
-  service_type: 'gojek'
+  service_type: 'gocar'
+)
+
+DriverLocation.create!(
+  driver_id: 1,
+  order_id: nil,
+  location: 'kemang',
+  lat: -6.2622689,
+  lng: 106.8134181,
+  status: 'online'
+)
+
+DriverLocation.create!(
+  driver_id: 2,
+  order_id: nil,
+  location: 'jakarta',
+  lat: -6.17511,
+  lng: 106.8650395,
+  status: 'online'
+)
+
+DriverLocation.create!(
+  driver_id: 4,
+  order_id: nil,
+  location: 'jakarta',
+  lat: -6.17511,
+  lng: 106.8650395,
+  status: 'online'
 )

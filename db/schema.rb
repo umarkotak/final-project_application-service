@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20171211035724) do
 
   create_table "driver_locations", force: :cascade do |t|
     t.bigint "driver_id"
+    t.bigint "order_id"
     t.text "location"
     t.decimal "lat"
     t.decimal "lng"
@@ -24,6 +25,7 @@ ActiveRecord::Schema.define(version: 20171211035724) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["driver_id"], name: "index_driver_locations_on_driver_id"
+    t.index ["order_id"], name: "index_driver_locations_on_order_id"
   end
 
   create_table "drivers", force: :cascade do |t|

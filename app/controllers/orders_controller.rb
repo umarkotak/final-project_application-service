@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  before_action :set_order, only: [:destroy]
+
   def index
     @orders = Order.all
   end
@@ -26,10 +28,23 @@ class OrdersController < ApplicationController
     @order.calculate_data(@order.origin, @order.destination)
     @order.status = 'on_progress'
 
+    @driver_location = DriverLocation.find_by(driver_id: @order.driver_id)
+    @driver_location.status = 'busy'
+
     if @order.save
+      @driver_location.order_id = @order.id
+      @driver_location.save
       redirect_to orders_path
     else
 
+    end
+  end
+
+  def destroy
+    @order.destroy
+    respond_to do |format|
+      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
@@ -42,3 +57,4 @@ class OrdersController < ApplicationController
       params.require(:order).permit(:user_id, :driver_id, :origin, :destination, :distance, :service_type, :payment_type, :price, :status)
     end
 end
+

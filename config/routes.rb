@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     member do
       get 'topup'
       patch 'topup' => :set_topup
+      get 'job'
+      post 'job' => :do_job
     end
   end
   

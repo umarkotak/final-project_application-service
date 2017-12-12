@@ -1,10 +1,11 @@
 class Order < ApplicationRecord
+  has_many :driver_locations
 
   validates :user_id, :origin, :destination, :service_type, :payment_type, presence: true
   
   def get_coordinate(location_name)
     result = {}
-    url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{location_name}+&key=AIzaSyD9eO9WPUr-KKTqUM8Q3uzHcZpThY4NIDM"
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{location_name.gsub(' ', '%20')}+&key=AIzaSyD9eO9WPUr-KKTqUM8Q3uzHcZpThY4NIDM"
     request = HTTP.get(url).to_s
     request = JSON.parse(request)
     result[:lat] = request["results"][0]["geometry"]["location"]["lat"]
