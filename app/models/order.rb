@@ -19,9 +19,8 @@ class Order < ApplicationRecord
       gmaps = GoogleMapsService::Client.new(key: 'AIzaSyBtGoQM9mdzHQiyjcxpxfJmSfjK0rUbGEI')
       distance_matrix = gmaps.distance_matrix(origin, destination)
 
-      status = false if distance_matrix[:rows][0][:elements][0][:status] == "NOT_FOUND"
-
       status = distance_matrix
+      status = false if distance_matrix[:rows][0][:elements][0][:status] == "NOT_FOUND"
     rescue
       status = false
     end

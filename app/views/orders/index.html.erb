@@ -2,7 +2,7 @@
 
 <h1>Orders</h1>
 
-<table>
+<table border="1" width="100%">
   <thead>
     <tr>
       <th>ID</th>
@@ -15,7 +15,7 @@
       <th>Payment Type</th>
       <th>Price</th>
       <th>Status</th>
-      <th colspan="3"></th>
+      <th>Action</th>
     </tr>
   </thead>
 
@@ -33,8 +33,6 @@
         <td><%= order.price %></td>
         <td><%= order.status %></td>
 
-        <td><%# link_to 'Show', driver_location %></td>
-        <td><%# link_to 'Edit', edit_driver_path(driver_location) %></td>
         <td><%= link_to 'Destroy', order_path(order), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

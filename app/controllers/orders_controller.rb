@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   before_action :set_order, only: [:destroy]
 
   def index
-    @orders = Order.all
+    @orders = Order.all.order(id: :desc)
   end
 
   def new
@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
 
       @origin = @order.get_coordinate(@order.origin)
       @destination = @order.get_coordinate(@order.destination)
-      
+
       @status = true
     else
       @status = false
@@ -29,16 +29,10 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
+    @order.status = 'on_progress'
 
-    route_status = @order.validate_route(@order.origin, @order.destination)
-    if route_status
-      @order.set_distance(route_status)
-      @order.set_price
-      @order.status = 'on_progress'
-
-      @driver_location = DriverLocation.find_by(driver_id: @order.driver_id)
-      @driver_location.status = 'busy'
-    end
+    @driver_location = DriverLocation.find_by(driver_id: @order.driver_id)
+    @driver_location.status = 'busy'
 
     @order.save
     @driver_location.order_id = @order.id
@@ -51,7 +45,6 @@ class OrdersController < ApplicationController
     @order.destroy
     respond_to do |format|
       format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
