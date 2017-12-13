@@ -1,6 +1,7 @@
 class Driver < ApplicationRecord
   has_secure_password
 
+  has_many :order
   has_many :driver_locations
 
   validates :username, :full_name, :email, :phone, :address, :service_type, presence: true

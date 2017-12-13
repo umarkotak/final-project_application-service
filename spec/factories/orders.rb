@@ -2,5 +2,10 @@
 
 FactoryGirl.define do
   factory :order do
+    association :user
+    association :driver
+    origin 'jakarta'
+    destination 'kemang'
+    service_type 'gojek'
   end
 end

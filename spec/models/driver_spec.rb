@@ -94,4 +94,36 @@ RSpec.describe Driver, type: :model do
     end
   end
 
+  describe "get available drivers" do
+    it "return one gojek driver" do
+      driver = Driver.get_available_drivers('gojek')
+      expect(driver.service_type).to eq('gojek')
+    end
+
+    it "return one gocar driver" do
+      driver = Driver.get_available_drivers('gocar')
+      expect(driver.service_type).to eq('gocar')
+    end
+  end
+
+  describe "Driver that completing order" do
+    it "will take user credits" do
+      user = create(:user)
+      driver = create(:driver)
+      order = build(:order, user: user, driver: driver, payment_type: 'gopay', price: 5000)
+      Driver.complete_job(order)
+      user.reload
+      expect(user.credit.to_i).to eq(45000)
+    end
+
+    it "will add driver credits" do
+      user = create(:user)
+      driver = create(:driver)
+      order = build(:order, user: user, driver: driver, payment_type: 'gopay', price: 5000)
+      Driver.complete_job(order)
+      driver.reload
+      expect(driver.credit.to_i).to eq(55000)
+    end
+  end
+
 end

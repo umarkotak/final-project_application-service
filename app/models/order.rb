@@ -1,5 +1,7 @@
 class Order < ApplicationRecord
   has_many :driver_locations
+  belongs_to :user
+  belongs_to :driver
 
   validates :user_id, :origin, :destination, :service_type, :payment_type, presence: true
   
