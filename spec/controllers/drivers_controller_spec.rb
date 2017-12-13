@@ -150,4 +150,12 @@ RSpec.describe DriversController, type: :controller do
       end
     end
   end
+
+  describe "GET #job" do
+    
+  end
+
+  describe "POST #do_job" do
+    
+  end
 end
