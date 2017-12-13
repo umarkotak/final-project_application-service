@@ -1,5 +1,42 @@
 <p id="notice"><%= notice %></p>
 
+<% if @any_order %>
+  <h1>Current Order</h1>
+  <table border="1" width="100%">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>User ID</th>
+        <th>Driver ID</th>
+        <th>Origin</th>
+        <th>Destination</th>
+        <th>Distance</th>
+        <th>Service Type</th>
+        <th>Payment Type</th>
+        <th>Price</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td><%= @any_order.try(:id) %></td>
+        <td><%= @any_order.try(:user_id) %></td>
+        <td><%= @any_order.try(:driver_id) %></td>
+        <td><%= @any_order.try(:origin) %></td>
+        <td><%= @any_order.try(:destination) %></td>
+        <td><%= @any_order.try(:distance) %></td>
+        <td><%= @any_order.try(:service_type) %></td>
+        <td><%= @any_order.try(:payment_type) %></td>
+        <td><%= @any_order.try(:price) %></td>
+        <td><%= @any_order.try(:status) %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+<% else %>
+
 <h1>New Orders</h1>
 
 <fieldset>
@@ -40,3 +77,5 @@
     </div>
   <% end %>
 </fieldset>
+
+<% end %>

@@ -59,10 +59,13 @@ class Order < ApplicationRecord
   end
 
   def gopay(user_id)
-    user = User.find(user_id)
+    user = User.find(self.user_id)
+    driver = Driver.find(self.driver_id)
     if user.credit > self.price  
-      user.credit -= self.credit
+      user.credit -= self.price
+      driver.credit += self.price
       user.save
+      driver.save
 
       status = true
     else

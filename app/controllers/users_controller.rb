@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @order_histories = Order.where(user_id: session[:user_id])
+    @order_histories = Order.where(user_id: session[:user_id]).order(id: :desc)
   end
 
   def new
@@ -60,6 +60,10 @@ class UsersController < ApplicationController
         format.html { redirect_to topup_user_path, notice: 'Top up failed: amount is invalid' }
       end
     end
+  end
+
+  def cancel_order
+    
   end
 
   private

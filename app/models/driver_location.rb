@@ -14,6 +14,25 @@ class DriverLocation < ApplicationRecord
     self.lng = request["results"][0]["geometry"]["location"]["lng"]
   end
 
+  def complete_job
+    self.status = 'online'
+    self.order_id = nil
+  end
+
+  def cancel_job(order)
+    self.status = 'online'
+    self.order_id = nil
+
+    user = User.find(order.user_id)
+    driver = Driver.find(order.driver_id)
+
+    user.credit += order.price
+    driver.credit -= order.price
+
+    user.save
+    driver.save
+  end
+
   private
     def validate_location
       if location != nil && location != ''

@@ -7,6 +7,7 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
+    @any_order = Order.where("user_id = '#{session[:user_id]}'").find_by(status: 'on_process')
   end
 
   def confirm_order
@@ -37,19 +38,23 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.set_order_data(@temp_data)
 
+    status = true
     if @order.payment_type == 'gopay'
       status = @order.gopay(session[:user_id])
+      
+      redirect_to session[:referer], notice: 'Your credit is insuficient, please top up' if !status
     end
 
-    if @order.save && status
+    if status
+      @order.save
       @driver_location = DriverLocation.find_by(driver_id: @order.driver_id)
       @driver_location.order_id = @order.id
       @driver_location.status = 'busy'
       @driver_location.save
       session[:temp_data] = nil
+
       redirect_to orders_path
     else
-      redirect_to session[:referer]
     end
   end
 
