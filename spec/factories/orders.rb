@@ -7,5 +7,6 @@ FactoryGirl.define do
     origin 'jakarta'
     destination 'kemang'
     service_type 'gojek'
+    payment_type 'cash'
   end
 end

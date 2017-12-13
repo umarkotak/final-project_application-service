@@ -48,4 +48,29 @@ RSpec.describe DriverLocation, type: :model do
       expect(driver_location.errors[:status]).to include("sakit is not a valid status type")
     end
   end
+
+  describe "method validation" do
+    before :each do
+      @driver_location = create(:driver_location)
+    end
+
+    it "have an API key" do
+      expect(@driver_location.apikey).not_to be_empty
+    end
+
+    context "create coordinate form location" do
+      it "will assign lat to driver_location" do
+        @driver_location.get_coordinate('jakarta')
+        expect(@driver_location.lat).to eq(-6.17511)
+      end
+
+      it "will assign lng to driver_location" do
+        @driver_location.get_coordinate('jakarta')
+        expect(@driver_location.lng).to eq(106.8650395)
+      end
+    end
+
+    
+  end
+
 end

@@ -4,6 +4,9 @@ class Order < ApplicationRecord
   belongs_to :driver
 
   validates :user_id, :origin, :destination, :service_type, :payment_type, presence: true
+  validates :service_type, inclusion: { in: %w(gocar gojek), message: "%{value} is not a valid service type"  }
+  validates :payment_type, inclusion: { in: %w(cash gopay), message: "%{value} is not a valid payment type"  }
+
   
   def apikey
     "AIzaSyAxXs-AipMveHRNInl7P3HubboAWgK4aqU"
