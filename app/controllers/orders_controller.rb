@@ -24,6 +24,7 @@ class OrdersController < ApplicationController
       @destination = @order.get_coordinate(@order.destination)
 
       session[:temp_data] = @order
+      session[:referer] = request.fullpath
 
       @status = true
     else
@@ -36,18 +37,20 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.set_order_data(@temp_data)
 
-    puts "DATA TEST #{@temp_data.to_json}"
-    puts "DATA TEST #{@order.to_json}"
+    if @order.payment_type == 'gopay'
+      status = @order.gopay(session[:user_id])
+    end
 
-    @driver_location = DriverLocation.find_by(driver_id: @order.driver_id)
-    @driver_location.status = 'busy'
-
-    @order.save
-    @driver_location.order_id = @order.id
-    @driver_location.save
-
-    session[:temp_data] = nil
-    redirect_to orders_path
+    if @order.save && status
+      @driver_location = DriverLocation.find_by(driver_id: @order.driver_id)
+      @driver_location.order_id = @order.id
+      @driver_location.status = 'busy'
+      @driver_location.save
+      session[:temp_data] = nil
+      redirect_to orders_path
+    else
+      redirect_to session[:referer]
+    end
   end
 
   def destroy

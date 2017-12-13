@@ -27,8 +27,10 @@ Rails.application.routes.draw do
     end
   end
 
+  controller :orders do
+    get 'orders/confirm_order' => :confirm_order
+  end
   resources :orders
-  post '/orders/confirm_order' => 'orders#confirm_order'
 
   resources :driver_locations
 

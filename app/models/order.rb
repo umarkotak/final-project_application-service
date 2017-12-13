@@ -24,7 +24,6 @@ class Order < ApplicationRecord
     rescue
       status = false
     end
-
     status
   end
 
@@ -57,6 +56,18 @@ class Order < ApplicationRecord
     drivers = drivers.where("driver_locations.status = 'online'").where("drivers.service_type = '#{self.service_type}'")
 
     drivers.order("RANDOM()").first
+  end
+
+  def gopay(user_id)
+    user = User.find(user_id)
+    if user.credit > self.price  
+      user.credit -= self.credit
+      user.save
+
+      status = true
+    else
+      status = false
+    end
   end
 
   private
