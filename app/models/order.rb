@@ -3,9 +3,13 @@ class Order < ApplicationRecord
 
   validates :user_id, :origin, :destination, :service_type, :payment_type, presence: true
   
+  def apikey
+    "AIzaSyAxXs-AipMveHRNInl7P3HubboAWgK4aqU"
+  end
+
   def get_coordinate(location_name)
     result = {}
-    url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{location_name.gsub(' ', '%20')}+&key=AIzaSyD9eO9WPUr-KKTqUM8Q3uzHcZpThY4NIDM"
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{location_name.gsub(' ', '%20')}+&key=#{apikey}"
     request = HTTP.get(url).to_s
     request = JSON.parse(request)
     result[:lat] = request["results"][0]["geometry"]["location"]["lat"]
@@ -16,7 +20,7 @@ class Order < ApplicationRecord
   def validate_route(origin, destination)
     status = true
     begin
-      gmaps = GoogleMapsService::Client.new(key: 'AIzaSyBtGoQM9mdzHQiyjcxpxfJmSfjK0rUbGEI')
+      gmaps = GoogleMapsService::Client.new(key: apikey)
       distance_matrix = gmaps.distance_matrix(origin, destination)
 
       status = distance_matrix

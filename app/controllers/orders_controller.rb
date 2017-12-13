@@ -21,8 +21,8 @@ class OrdersController < ApplicationController
       @order.user_id = session[:user_id]
       @order.driver_id = @driver.try(:id)
 
-      @origin = @order.get_coordinate(@order.origin)
-      @destination = @order.get_coordinate(@order.destination)
+      # @origin = @order.get_coordinate(@order.origin)
+      # @destination = @order.get_coordinate(@order.destination)
 
       session[:temp_data] = @order
       session[:referer] = request.fullpath

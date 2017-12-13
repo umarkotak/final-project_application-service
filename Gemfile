@@ -51,8 +51,8 @@ gem 'google_maps_service'
 # For http request
 gem 'http'
 
-# Active Support runtime dependencies
-# gem 'activesupport', '~> 4'
+# Racecar for consumer side 
+gem 'racecar'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
