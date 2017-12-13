@@ -89,15 +89,14 @@ class DriversController < ApplicationController
 
   def do_job
     @driver_location = DriverLocation.find_by(driver_id: session[:driver_id])
-
+    
     @order = Order.find_by(id: @driver_location.order_id)
     @order.status = params[:status]
 
-    if @order.status == 'canceled' && @order.payment_type == 'gopay'
-      @driver_location.cancel_job(@order)
-    else
-      @driver_location.complete_job
-    end
+    Driver.complete_job(@order) if @order.status == 'completed'
+
+    @driver_location.order_id = nil
+    @driver_location.status = 'online'
 
     respond_to do |format|
       if @driver_location.save && @order.save
@@ -105,7 +104,7 @@ class DriversController < ApplicationController
       else
         format.html { redirect_to job_driver_path(session[:driver_id]), notice: 'Something wrong' }
       end
-    end    
+    end 
   end
 
   private

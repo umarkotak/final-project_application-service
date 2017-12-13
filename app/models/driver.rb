@@ -34,5 +34,25 @@ class Driver < ApplicationRecord
   def is_number?(amount)
     true if Float(amount) rescue false
   end
-  
+
+  def self.get_available_drivers(service_type)
+    drivers = Driver.joins(:driver_locations)
+    drivers = drivers.where("driver_locations.status = 'online'")
+    drivers = drivers.where("drivers.service_type = '#{service_type}'")
+
+    drivers.order("RANDOM()").first
+  end
+
+  def self.complete_job(order)
+    if order.payment_type == 'gopay'
+      user = User.find(order.user_id)
+      driver = Driver.find(order.driver_id)
+
+      user.credit -= order.price
+      driver.credit += order.price
+
+      user.save
+      driver.save
+    end
+  end
 end

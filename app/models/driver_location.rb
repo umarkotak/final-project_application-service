@@ -18,23 +18,25 @@ class DriverLocation < ApplicationRecord
     self.lng = request["results"][0]["geometry"]["location"]["lng"]
   end
 
-  def complete_job
+  def complete_job(order)
+    if order.payment_type == 'gopay'
+      user = User.find(order.user_id)
+      driver = Driver.find(order.driver_id)
+
+      user.credit -= order.price
+      driver.credit += order.price
+
+      user.save
+      driver.save
+    end
+
     self.status = 'online'
     self.order_id = nil
   end
 
-  def cancel_job(order)
+  def cancel_job
     self.status = 'online'
     self.order_id = nil
-
-    user = User.find(order.user_id)
-    driver = Driver.find(order.driver_id)
-
-    user.credit += order.price
-    driver.credit -= order.price
-
-    user.save
-    driver.save
   end
 
   private

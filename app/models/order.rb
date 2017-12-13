@@ -55,26 +55,9 @@ class Order < ApplicationRecord
     self.status       = 'on_process'
   end
 
-  def get_available_drivers
-    drivers = Driver.joins(:driver_locations)
-    drivers = drivers.where("driver_locations.status = 'online'").where("drivers.service_type = '#{self.service_type}'")
-
-    drivers.order("RANDOM()").first
-  end
-
-  def gopay(user_id)
+  def check_gopay(user_id)
     user = User.find(self.user_id)
-    driver = Driver.find(self.driver_id)
-    if user.credit > self.price  
-      user.credit -= self.price
-      driver.credit += self.price
-      user.save
-      driver.save
-
-      status = true
-    else
-      status = false
-    end
+    user.credit > self.price ? status = true : status = false
   end
 
   private

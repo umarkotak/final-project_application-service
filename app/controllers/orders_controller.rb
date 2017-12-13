@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
 
   def confirm_order
     @order  = Order.new(order_params)
-    @driver = @order.get_available_drivers
+    @driver = Driver.get_available_drivers(@order.service_type)
 
     route_status = @order.validate_route(@order.origin, @order.destination)
     if route_status
@@ -40,9 +40,7 @@ class OrdersController < ApplicationController
 
     status = true
     if @order.payment_type == 'gopay'
-      status = @order.gopay(session[:user_id])
-      
-      redirect_to session[:referer], notice: 'Your credit is insuficient, please top up' if !status
+      status = @order.check_gopay(session[:user_id])
     end
 
     if status
@@ -55,6 +53,7 @@ class OrdersController < ApplicationController
 
       redirect_to orders_path
     else
+      redirect_to session[:referer], notice: 'Your credit is insuficient, please top up'
     end
   end
 
