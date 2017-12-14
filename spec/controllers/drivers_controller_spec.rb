@@ -152,10 +152,54 @@ RSpec.describe DriversController, type: :controller do
   end
 
   describe "GET #job" do
-    
+    it "assign current job if exist" do
+      order = create(:order, driver: @driver)
+      driver_location = create(:driver_location, driver: @driver, order: order)
+      get :job, params: { id: @driver }
+      expect(assigns(:order)).to eq(order)
+    end
+
+    it "will populates jobs history" do
+      order = create(:order, driver: @driver)
+      get :job, params: { id: @driver }
+      expect(assigns(:finished_orders)).to include(order)
+    end
+
+    it "renders the :job template" do
+      get :job, params: { id: @driver}
+      expect(response).to render_template :job
+    end
   end
 
   describe "POST #do_job" do
-    
+    it "will execute the transaction if completed" do
+      order = create(:order, driver: @driver, price: 5000, payment_type: 'gopay')
+      post :do_job, params: { driver: @driver }
+      @driver.reload
+      expect(assigns(:driver).credit).to eq(55000)
+    end
+
+    it "will change the driver_location order_id to be nil" do
+      
+    end
+
+    it "will change the driver_location status to be online" do
+      
+    end
+
+    it "will complete the order" do
+      
+    end
+
+    it "saves the new driver in the database" do
+      expect {
+        post :create, params: { driver: attributes_for(:driver, username: 'umar1') }
+      }.to change(Driver, :count).by(1)
+    end
+
+    it "is redirected to login page" do
+      post :create, params: { driver: attributes_for(:driver, username: 'umar1') }
+      expect(response).to redirect_to(login_driver_path)
+    end
   end
 end

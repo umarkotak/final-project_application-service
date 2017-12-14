@@ -51,7 +51,7 @@ class OrdersController < ApplicationController
       @driver_location.save
       session[:temp_data] = nil
 
-      redirect_to orders_path
+      redirect_to new_order_path
     else
       redirect_to session[:referer], notice: 'Your credit is insuficient, please top up'
     end
