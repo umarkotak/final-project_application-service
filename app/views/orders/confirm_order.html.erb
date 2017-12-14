@@ -11,23 +11,13 @@
     <% if @status || @driver %>
     <table>
       <tr valign="top">
-        <td>
+        <td width="200px">
           <div class="field" style="border: 1px solid black; padding: 5px;">
             <p><b>Origin : </b></p>
             <p><%= @order.origin %></p>
-            <p><b>Coordinate :</b></p>
-            <p>Lat : <%# @origin[:lat] %></p>
-            <p>Lng : <%# @origin[:lng] %></p>
-          </div>
-        </td>
 
-        <td>
-          <div class="field" style="border: 1px solid black; padding: 5px;">
             <p><b>Destination : </b></p>
             <p><%= @order.destination %></p>
-            <p><b>Coordinate :</b></p>
-            <p>Lat : <%# @destination[:lat] %></p>
-            <p>Lng : <%# @destination[:lng] %></p>
           </div>
         </td>
 
@@ -52,12 +42,6 @@
       <div class="actions">
         <%= form.submit %>
       </div>
-
-    <% elsif @status %>
-      <p><b>Your Driver is Unavailable at The Moment</b></p>
-      <%= link_to "New Order", new_order_path %>
-      <br>
-
     <% else %>
       <p><b>Location is Invalid</b></p>
       <%= link_to "New Order", new_order_path %>
@@ -65,12 +49,5 @@
     <% end %>
 
     <br>
-
-    <!-- THIS IS TEST AREA FOR MICROSERVICES -->
-      <div>
-        <%= button_to 'TEST KAFKA', orders_micro_order_path, method: :micro_order %>
-      </div>
-    <!-- END OF AREA -->
-
   </fieldset>
 <% end %>
