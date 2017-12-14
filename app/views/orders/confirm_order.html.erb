@@ -2,13 +2,13 @@
 
 <h1>Confirm Order</h1>
 
-<%= form_for @order, url: {action: 'create'} do |form| %>
+<%= form_for @order, url: {action: 'micro_order'} do |form| %>
   <div class="field">
     <p><b>User ID : </b><%= session[:user_id] %></p>
   </div>
 
   <fieldset>
-    <% if @status && @driver %>
+    <% if @status || @driver %>
     <table>
       <tr valign="top">
         <td>
@@ -78,5 +78,12 @@
     <% end %>
 
     <br>
+
+    <!-- THIS IS TEST AREA FOR MICROSERVICES -->
+      <div>
+        <%= button_to 'TEST KAFKA', orders_micro_order_path, method: :micro_order %>
+      </div>
+    <!-- END OF AREA -->
+
   </fieldset>
 <% end %>

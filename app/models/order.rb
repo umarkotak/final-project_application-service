@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
   has_many :driver_locations
   belongs_to :user
-  belongs_to :driver
+  belongs_to :driver, optional: true
 
   validates :user_id, :origin, :destination, :service_type, :payment_type, presence: true
   validates :service_type, inclusion: { in: %w(gocar gojek), message: "%{value} is not a valid service type"  }

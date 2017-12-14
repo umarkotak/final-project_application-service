@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
 
   def confirm_order
     @order  = Order.new(order_params)
-    @driver = Driver.get_available_drivers(@order.service_type)
+    # @driver = Driver.get_available_drivers(@order.service_type)
 
     route_status = @order.validate_route(@order.origin, @order.destination)
     if route_status
@@ -63,14 +63,29 @@ class OrdersController < ApplicationController
       seed_brokers: ['127.0.0.1:9092'],
       client_id: 'goride',
     )
-
     data = {}
-    data[:order_id] = 1
-    data[:service_type] = 'gojek'
 
-    kafka.deliver_message("#{data}", topic: 'greetings')
+    @temp_data = session[:temp_data]
+    @order = Order.new(order_params)
+    @order.set_order_data(@temp_data)
 
-    redirect_to new_order_path
+    status = true
+    if @order.payment_type == 'gopay'
+      status = @order.check_gopay(session[:user_id])
+    end
+
+    if status
+      @order.save
+      data[:order_id] = @order.id
+      data[:service_type] = @order.service_type
+
+      session[:temp_data] = nil
+
+      kafka.deliver_message("#{data}", topic: 'request_driver')
+      redirect_to new_order_path
+    else
+      redirect_to session[:referer], notice: 'Your credit is insuficient, please top up'
+    end
   end
 
   def destroy
