@@ -40,7 +40,10 @@ RSpec.describe DriversController, type: :controller do
   end
 
   describe "GET #new" do
-
+    it "renders the :new template" do
+      get :new
+      expect(response).to render_template :new
+    end
   end
 
   describe "GET #edit" do
@@ -171,35 +174,27 @@ RSpec.describe DriversController, type: :controller do
     end
   end
 
-  describe "POST #do_job" do
-    it "will execute the transaction if completed" do
-      order = create(:order, driver: @driver, price: 5000, payment_type: 'gopay')
-      post :do_job, params: { driver: @driver }
-      @driver.reload
-      expect(assigns(:driver).credit).to eq(55000)
-    end
+  # describe "POST #do_job" do
+  #   it "will execute the transaction if completed" do
+  #     driver = create(:driver, username: 'umarkotakd2')
+  #     order = create(:order, driver: driver, price: 5000, payment_type: 'gopay')
+  #     driver_location = create(:driver_location, driver: driver, order: order)
 
-    it "will change the driver_location order_id to be nil" do
+  #     post :do_job, params: { driver: driver }
+  #     driver.reload
+  #     expect(driver.credit).to eq(55000)
+  #   end
+
+  #   it "will change the driver_location order_id to be nil" do
       
-    end
+  #   end
 
-    it "will change the driver_location status to be online" do
+  #   it "will change the driver_location status to be online" do
       
-    end
+  #   end
 
-    it "will complete the order" do
+  #   it "will complete the order" do
       
-    end
-
-    it "saves the new driver in the database" do
-      expect {
-        post :create, params: { driver: attributes_for(:driver, username: 'umar1') }
-      }.to change(Driver, :count).by(1)
-    end
-
-    it "is redirected to login page" do
-      post :create, params: { driver: attributes_for(:driver, username: 'umar1') }
-      expect(response).to redirect_to(login_driver_path)
-    end
-  end
+  #   end
+  # end
 end
