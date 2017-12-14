@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:destroy]
+  skip_before_action :verify_authenticity_token, only: [:micro_order]
 
   def index
     @orders = Order.all.order(id: :desc)
@@ -58,7 +59,18 @@ class OrdersController < ApplicationController
   end
 
   def micro_order
-    redirect_to orders_path
+    kafka = Kafka.new(
+      seed_brokers: ['127.0.0.1:9092'],
+      client_id: 'goride',
+    )
+
+    data = {}
+    data[:order_id] = 1
+    data[:service_type] = 'gojek'
+
+    kafka.deliver_message("#{data}", topic: 'greetings')
+
+    redirect_to new_order_path
   end
 
   def destroy
