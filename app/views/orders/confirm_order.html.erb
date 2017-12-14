@@ -75,7 +75,14 @@
       <p><b>Location is Invalid</b></p>
       <%= link_to "New Order", new_order_path %>
       <br>
-    <% end %>  
+    <% end %>
+
+    <!-- THIS PART FOR MICROSERVICE ACTION TEST -->
+      <div>
+        <p>Test Area</p>
+        <%= button_to 'Order', orders_micro_order_path, method: :micro_order %>
+      </div>
+    <!-- END OF THE PART -->
 
     <br>
   </fieldset>

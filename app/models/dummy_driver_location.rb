@@ -1,0 +1,2 @@
+class DummyDriverLocation < ApplicationRecord
+end

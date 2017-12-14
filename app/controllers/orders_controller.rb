@@ -57,6 +57,10 @@ class OrdersController < ApplicationController
     end
   end
 
+  def micro_order
+    redirect_to orders_path
+  end
+
   def destroy
     @order.destroy
     respond_to do |format|
