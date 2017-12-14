@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171214034106) do
+ActiveRecord::Schema.define(version: 20171211035724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20171214034106) do
   create_table "driver_locations", force: :cascade do |t|
     t.bigint "driver_id"
     t.bigint "order_id"
+    t.string "service_type"
     t.text "location"
     t.decimal "lat"
     t.decimal "lng"
@@ -39,19 +40,6 @@ ActiveRecord::Schema.define(version: 20171214034106) do
     t.decimal "credit", precision: 8, scale: 2, default: "50000.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "dummy_driver_locations", force: :cascade do |t|
-    t.bigint "driver_id"
-    t.bigint "order_id"
-    t.text "location"
-    t.decimal "lat"
-    t.decimal "lng"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["driver_id"], name: "index_dummy_driver_locations_on_driver_id"
-    t.index ["order_id"], name: "index_dummy_driver_locations_on_order_id"
   end
 
   create_table "orders", force: :cascade do |t|

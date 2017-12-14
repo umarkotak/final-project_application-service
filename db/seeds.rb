@@ -80,6 +80,7 @@ Driver.create!(
 
 DriverLocation.create!(
   driver_id: 1,
+  service_type: 'gojek',
   order_id: nil,
   location: 'kemang',
   lat: -6.2622689,
@@ -89,6 +90,7 @@ DriverLocation.create!(
 
 DriverLocation.create!(
   driver_id: 2,
+  service_type: 'gojek',
   order_id: nil,
   location: 'jakarta',
   lat: -6.17511,
@@ -98,6 +100,7 @@ DriverLocation.create!(
 
 DriverLocation.create!(
   driver_id: 4,
+  service_type: 'gocar',
   order_id: nil,
   location: 'jakarta',
   lat: -6.17511,

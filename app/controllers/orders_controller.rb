@@ -33,30 +33,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  # def create
-  #   @temp_data = session[:temp_data]
-  #   @order = Order.new(order_params)
-  #   @order.set_order_data(@temp_data)
-
-  #   status = true
-  #   if @order.payment_type == 'gopay'
-  #     status = @order.check_gopay(session[:user_id])
-  #   end
-
-  #   if status
-  #     @order.save
-  #     @driver_location = DriverLocation.find_by(driver_id: @order.driver_id)
-  #     @driver_location.order_id = @order.id
-  #     @driver_location.status = 'busy'
-  #     @driver_location.save
-  #     session[:temp_data] = nil
-
-  #     redirect_to new_order_path
-  #   else
-  #     redirect_to session[:referer], notice: 'Your credit is insuficient, please top up'
-  #   end
-  # end
-
   def micro_order
     kafka = Kafka.new(
       seed_brokers: ['127.0.0.1:9092'],
@@ -77,6 +53,7 @@ class OrdersController < ApplicationController
       @order.save
       data[:order_id] = @order.id
       data[:service_type] = @order.service_type
+      data[:origin] = @order.get_coordinate(@order.origin)
 
       session[:temp_data] = nil
 

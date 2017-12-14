@@ -15,6 +15,8 @@ class DriverLocationsController < ApplicationController
     @driver_location.destroy if @driver_location
 
     @driver_location = DriverLocation.new(driver_location_params)
+    @driver = Driver.find(session[:driver_id])
+    @driver_location.service_type = @driver.service_type
 
     begin
       @driver_location.get_coordinate(@driver_location.location)
@@ -27,6 +29,14 @@ class DriverLocationsController < ApplicationController
       else
         format.html { render :new }
       end
+    end
+  end
+
+  def destroy
+    @driver_location = DriverLocation.find(params[:id])
+    @driver_location.destroy
+    respond_to do |format|
+      format.html { redirect_to driver_locations_url, notice: 'driver location was successfully destroyed.' }
     end
   end
 
