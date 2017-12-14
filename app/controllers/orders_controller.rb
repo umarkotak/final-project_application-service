@@ -13,7 +13,6 @@ class OrdersController < ApplicationController
 
   def confirm_order
     @order  = Order.new(order_params)
-    # @driver = Driver.get_available_drivers(@order.service_type)
 
     route_status = @order.validate_route(@order.origin, @order.destination)
     if route_status

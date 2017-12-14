@@ -41,19 +41,6 @@
             <p><b>Price : </b><%= number_to_currency(@order.price, unit: "Rp. ", delimiter: ".", separator: ",") %></p>
           </div>
         </td>
-
-        <td>
-          <div class="field" style="border: 1px solid black; padding: 5px;">
-            <% if @driver %>
-              <p><b>Driver Information : </b></p>
-              <p><b>ID : </b><%= @driver.id %></p>
-              <p><b>Name : </b><%= @driver.full_name %></p>
-              <p><b>Phone : </b><%= @driver.phone %></p>
-            <% else %>
-              <p>Your driver is unavailable at the moment</p>
-            <% end %>
-          </div>
-        </td>
       </tr>
     </table>
 
