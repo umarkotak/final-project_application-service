@@ -32,13 +32,17 @@ class DriverLocationsController < ApplicationController
     end
   end
 
-  def micro_create_driver_location
+  def micro_create
     kafka = Kafka.new(
       seed_brokers: ['127.0.0.1:9092'],
       client_id: 'goride',
     )
     data = {}
     data[:action] = 'set_driver_location'
+
+    @driver = Driver.find(session[:driver_id])
+    data[:driver_id] = @driver.id
+    data[:service_type] = @driver.service_type
 
     kafka.deliver_message("#{data}", topic: 'driver_location')
 
