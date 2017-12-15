@@ -33,6 +33,9 @@ Rails.application.routes.draw do
   end
   resources :orders
 
+  controller :driver_locations do
+    post 'orders/micro_create_driver_location' => :micro_create_driver_location 
+  end
   resources :driver_locations
 
 end

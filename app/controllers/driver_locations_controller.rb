@@ -32,6 +32,19 @@ class DriverLocationsController < ApplicationController
     end
   end
 
+  def micro_create_driver_location
+    kafka = Kafka.new(
+      seed_brokers: ['127.0.0.1:9092'],
+      client_id: 'goride',
+    )
+    data = {}
+    data[:action] = 'set_driver_location'
+
+    kafka.deliver_message("#{data}", topic: 'driver_location')
+
+    redirect_to new_driver_location_path
+  end
+
   def destroy
     @driver_location = DriverLocation.find(params[:id])
     @driver_location.destroy

@@ -1,9 +1,15 @@
 class ConsumerTestConsumer < Racecar::Consumer
-  subscribes_to "request_driver"
+  subscribes_to "driver_location"
 
   def process(message)
     data = eval(message.value)
 
+    if data[:action] == 'get_driver'
+      get_driver(data)
+    end
+  end
+
+  def get_driver(data)
     driver_locations = DriverLocation.where("status = 'online'")
     driver_locations = driver_locations.where("service_type = '#{data[:service_type]}'")
     driver_locations = driver_locations.select do |driver_location|
@@ -11,34 +17,42 @@ class ConsumerTestConsumer < Racecar::Consumer
       origin = [data[:origin][:lat], data[:origin][:lng]]
       get_distance(origin, destination) < 20.0
     end
-    
+
     driver_location = driver_locations.sample
 
     if driver_location
-      driver_location.order_id = data[:order_id]
-      driver_location.status = 'busy'
-      driver_location.save
-
-      order = Order.find(data[:order_id])
-      order.driver_id = driver_location.driver_id
-      order.save
-
-      puts "=========================================="
-      puts "CONVERTED DATA      = #{data}"
-      puts "DRIVER ID           = #{driver_location.driver_id}"
-      puts "=========================================="
+      driver_found(driver_location, data)
     else
-      sleep(3)
+      driver_not_found
+    end
+  end
+
+  def driver_found(driver_location, data)
+    driver_location.order_id = data[:order_id]
+    driver_location.status = 'busy'
+    driver_location.save
+
+    order = Order.find(data[:order_id])
+    order.driver_id = driver_location.driver_id
+    order.save
+
+    puts "=========================================="
+    puts "CONVERTED DATA      = #{data}"
+    puts "DRIVER ID           = #{driver_location.driver_id}"
+    puts "=========================================="
+  end
+
+  def driver_not_found
+    sleep(3)
       kafka = Kafka.new(
         seed_brokers: ['127.0.0.1:9092'],
         client_id: 'goride',
       )
-      kafka.deliver_message("#{data}", topic: 'request_driver')
+      kafka.deliver_message("#{data}", topic: 'driver_location')
 
       puts "=========================================="
       puts "UNAVAILABLE DRIVER AT THE MOMENT"
       puts "=========================================="
-    end
   end
 
   def get_distance(loc1, loc2)

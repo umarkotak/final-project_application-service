@@ -21,9 +21,6 @@ class OrdersController < ApplicationController
       @order.user_id = session[:user_id]
       @order.driver_id = @driver.try(:id)
 
-      # @origin = @order.get_coordinate(@order.origin)
-      # @destination = @order.get_coordinate(@order.destination)
-
       session[:temp_data] = @order
       session[:referer] = request.fullpath
 
@@ -39,6 +36,7 @@ class OrdersController < ApplicationController
       client_id: 'goride',
     )
     data = {}
+    data[:action] = 'get_driver'
 
     @temp_data = session[:temp_data]
     @order = Order.new(order_params)
@@ -57,7 +55,7 @@ class OrdersController < ApplicationController
 
       session[:temp_data] = nil
 
-      kafka.deliver_message("#{data}", topic: 'request_driver')
+      kafka.deliver_message("#{data}", topic: 'driver_location')
       redirect_to new_order_path
     else
       redirect_to session[:referer], notice: 'Your credit is insuficient, please top up'
@@ -70,7 +68,7 @@ class OrdersController < ApplicationController
       format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
     end
   end
-
+  
   private
     def set_order
       @order = Order.find(params[:id])
