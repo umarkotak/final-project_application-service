@@ -1,9 +1,14 @@
 class DriverLocationsController < ApplicationController
-  before_action :set_driver_location, only: [:create]
+  before_action :set_driver_location, only: [:create, :micro_create]
 
   def index
     @driver = Driver.find(session[:driver_id])
     @driver_locations = DriverLocation.all
+
+    url = "http://localhost:3000/driver_locations"
+    request = HTTP.get(url).to_s
+    request = JSON.parse(request)
+    @micro_drivers = request
   end
 
   def new
@@ -40,13 +45,32 @@ class DriverLocationsController < ApplicationController
     data = {}
     data[:action] = 'set_driver_location'
 
+    @driver_location.destroy if @driver_location
+    @driver_location = DriverLocation.new(driver_location_params)
     @driver = Driver.find(session[:driver_id])
-    data[:driver_id] = @driver.id
-    data[:service_type] = @driver.service_type
+    @driver_location.service_type = @driver.service_type
 
-    kafka.deliver_message("#{data}", topic: 'driver_location')
+    begin
+      @driver_location.get_coordinate(@driver_location.location)
+      data[:driver_location] = {
+        driver_id: session[:driver_id],
+        service_type: @driver_location.service_type,
+        location: @driver_location.location,
+        lat: @driver_location.lat,
+        lng: @driver_location.lng,
+        status: @driver_location.status
+      }
+    rescue
+    end
 
-    redirect_to new_driver_location_path
+    respond_to do |format|
+      if @driver_location.valid?
+        kafka.deliver_message("#{data}", topic: 'driver_location')
+        format.html { redirect_to driver_locations_path, notice: 'Driver was successfully created.' }
+      else
+        format.html { render :new }
+      end
+    end
   end
 
   def destroy

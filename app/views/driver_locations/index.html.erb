@@ -35,3 +35,35 @@
 </table>
 
 <%= link_to "Set My Location", new_driver_location_path %>
+
+<h1>Driver Locations From Allocation Service</h1>
+
+<table border="1" width="100%">
+  <thead>
+    <tr>
+      <th>Driver_id</th>
+      <th>Service Type</th>
+      <th>Location</th>
+      <th>Lat</th>
+      <th>Lng</th>
+      <th>Status</th>
+      <th>Order_id</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @micro_drivers.each do |driver_location| %>
+      <tr>
+        <td><%= driver_location['driver_id'] %></td>
+        <td><%= driver_location['service_type'] %></td>
+        <td><%= driver_location['location'] %></td>
+        <td><%= driver_location['lat'] %></td>
+        <td><%= driver_location['lng'] %></td>
+        <td><%= driver_location['status'] %></td>
+        <td><%= driver_location['order_id'] %></td>
+        <td><%# link_to 'Unset', driver_location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
