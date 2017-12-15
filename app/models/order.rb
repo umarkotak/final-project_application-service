@@ -14,7 +14,7 @@ class Order < ApplicationRecord
 
   def get_coordinate(location_name)
     result = {}
-    url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{location_name.gsub(' ', '%20')}+&key=#{apikey}"
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{location_name.gsub(' ', '+')}+&key=#{apikey}"
     request = HTTP.get(url).to_s
     request = JSON.parse(request)
     result[:lat] = request["results"][0]["geometry"]["location"]["lat"]
