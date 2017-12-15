@@ -23,7 +23,7 @@ class ConsumerTestConsumer < Racecar::Consumer
     if driver_location
       driver_found(driver_location, data)
     else
-      driver_not_found
+      driver_not_found(data)
     end
   end
 
@@ -42,7 +42,7 @@ class ConsumerTestConsumer < Racecar::Consumer
     puts "=========================================="
   end
 
-  def driver_not_found
+  def driver_not_found(data)
     sleep(3)
       kafka = Kafka.new(
         seed_brokers: ['127.0.0.1:9092'],
