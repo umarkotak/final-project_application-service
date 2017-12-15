@@ -96,11 +96,15 @@ RSpec.describe Driver, type: :model do
 
   describe "get available drivers" do
     it "return one gojek driver" do
+      gojek_driver = create(:driver, username: 'gojek_driver', service_type: 'gocar')
+      driver_location = create(:driver_location, driver_id: gojek_driver.id)
       driver = Driver.get_available_drivers('gojek')
       expect(driver.service_type).to eq('gojek')
     end
 
     it "return one gocar driver" do
+      gocar_driver = create(:driver, username: 'gocar_driver', service_type: 'gocar')
+      driver_location = create(:driver_location, driver_id: gocar_driver.id)
       driver = Driver.get_available_drivers('gocar')
       expect(driver.service_type).to eq('gocar')
     end
