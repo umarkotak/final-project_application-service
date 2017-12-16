@@ -23,10 +23,14 @@ class DriverLocation < ApplicationRecord
     def validate_location
       if location != nil && location != ''
         # Setup API keys
-        gmaps = GoogleMapsService::Client.new(key: apikey)
-        distance_matrix = gmaps.distance_matrix(location, location)
-        status = distance_matrix[:rows][0][:elements][0][:status]
-        errors.add(:location, "is invalid") if status == "NOT_FOUND"
+        begin
+          gmaps = GoogleMapsService::Client.new(key: apikey)
+          distance_matrix = gmaps.distance_matrix(location, location)
+          status = distance_matrix[:rows][0][:elements][0][:status]
+          errors.add(:location, "is invalid") if status == "NOT_FOUND"
+        rescue
+          errors.add(:location, "is invalid") if status == "NOT_FOUND"
+        end
       end
     end
 end
