@@ -1,12 +1,8 @@
-class ConsumerTestConsumer < Racecar::Consumer
+class ApplicationConsumer < Racecar::Consumer
   subscribes_to "application"
 
   def process(message)
     data = eval(message.value)
-
-    # if data[:action] == 'get_driver'
-    #   get_driver(data)
-    # end
 
     if data[:action] == 'send_driver_id'
       set_driver_id_to_order(data)
