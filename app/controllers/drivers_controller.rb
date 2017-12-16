@@ -69,8 +69,15 @@ class DriversController < ApplicationController
   end
 
   def job
-    @driver_location = DriverLocation.find_by(driver_id: session[:driver_id])
-    @order = Order.find_by(id: @driver_location.try(:order_id))
+    url = "http://localhost:3001/driver_locations"
+    request = HTTP.get(url).to_s
+    request = JSON.parse(request)
+
+    @driver_location = request.find { |hash| hash['driver_id'].to_i == session[:driver_id] }
+    @order = Order.find_by(id: @driver_location['order_id'])
+
+    # @driver_location = DriverLocation.find_by(driver_id: session[:driver_id])
+    # @order = Order.find_by(id: @driver_location.try(:order_id))
 
     @finished_orders = Order.where(driver_id: session[:driver_id]).order(id: :desc)
   end

@@ -9,11 +9,18 @@ class ConsumerTestConsumer < Racecar::Consumer
     # end
 
     if data[:action] == 'send_driver_id'
-    puts "=========================================="
-    puts "DATA = #{data}"
-    puts "=========================================="
+      set_driver_id_to_order(data)
     end
   end
+
+  def set_driver_id_to_order(data)
+    order = Order.find(data[:order_id])
+    order.driver_id = data[:driver_id]
+    order.save
+  end
+
+  # MONOLITIC CODE ASSETS
+  # ==============================================
 
   def get_driver(data)
     driver_locations = DriverLocation.where("status = 'online'")
