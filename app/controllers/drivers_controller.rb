@@ -2,6 +2,7 @@ class DriversController < ApplicationController
   skip_before_action :authorize, only:[:create, :new]
   before_action :set_driver, only: [:show, :edit, :update, :destroy, :topup, :set_topup]
   before_action :authenticate, only: [:show, :edit]
+  before_action :initiate_kafka, only: [:do_job]
 
   def index
     @drivers = Driver.all
@@ -83,18 +84,38 @@ class DriversController < ApplicationController
   end
 
   def do_job
-    @driver_location = DriverLocation.find_by(driver_id: session[:driver_id])
-    
-    @order = Order.find_by(id: @driver_location.order_id)
+    url = "http://localhost:3001/driver_locations"
+    request = HTTP.get(url).to_s
+    request = JSON.parse(request)
+
+    @driver_location = request.find { |hash| hash['driver_id'].to_i == session[:driver_id] }
+
+    @order = Order.find_by(id: @driver_location['order_id'])
     @order.status = params[:status]
 
     Driver.complete_job(@order) if @order.status == 'completed'
 
-    @driver_location.order_id = nil
-    @driver_location.status = 'online'
+    @message[:action] = 'set_driver_location_done'
+    @message[:driver_id] = session[:driver_id]
+
+    @kafka.deliver_message("#{@message}", topic: 'driver_location')
+
+    # MONOLITIC CODE ASSETS
+    # ======================================================
+
+    # @driver_location = DriverLocation.find_by(driver_id: session[:driver_id])
+    
+    # @order = Order.find_by(id: @driver_location.order_id)
+    # @order.status = params[:status]
+
+    # Driver.complete_job(@order) if @order.status == 'completed'
+
+    # @driver_location.order_id = nil
+    # @driver_location.status = 'online'
 
     respond_to do |format|
-      if @driver_location.save && @order.save
+      # if @driver_location.save && @order.save
+      if @order.save
         format.html { redirect_to job_driver_path(session[:driver_id]), notice: "Order #{@order.status}" }
       else
         format.html { redirect_to job_driver_path(session[:driver_id]), notice: 'Something wrong' }
@@ -117,5 +138,13 @@ class DriversController < ApplicationController
       elsif session[:user_id]
         redirect_to user_path(session[:user_id])
       end
+    end
+
+    def initiate_kafka
+      @kafka = Kafka.new(
+        seed_brokers: ['127.0.0.1:9092'],
+        client_id: 'goride',
+      )
+      @message = {}
     end
 end
