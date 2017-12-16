@@ -65,6 +65,4 @@ class Order < ApplicationRecord
     user.credit > self.price ? status = true : status = false
   end
 
-  private
-
 end
