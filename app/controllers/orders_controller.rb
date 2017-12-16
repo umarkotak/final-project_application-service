@@ -51,7 +51,7 @@ class OrdersController < ApplicationController
 
       session[:temp_data] = nil
 
-      kafka.deliver_message("#{@message}", topic: 'driver_location')
+      @kafka.deliver_message("#{@message}", topic: 'driver_location')
       redirect_to new_order_path
     else
       redirect_to session[:referer], notice: 'Your credit is insuficient, please top up'
