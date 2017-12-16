@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:destroy]
+  before_action :initiate_kafka, only: [:micro_order]
   skip_before_action :verify_authenticity_token, only: [:micro_order]
 
   def index
@@ -31,12 +32,7 @@ class OrdersController < ApplicationController
   end
 
   def micro_order
-    kafka = Kafka.new(
-      seed_brokers: ['127.0.0.1:9092'],
-      client_id: 'goride',
-    )
-    data = {}
-    data[:action] = 'get_driver'
+    @message[:action] = 'get_driver'
 
     @temp_data = session[:temp_data]
     @order = Order.new(order_params)
@@ -49,13 +45,13 @@ class OrdersController < ApplicationController
 
     if status
       @order.save
-      data[:order_id] = @order.id
-      data[:service_type] = @order.service_type
-      data[:origin] = @order.get_coordinate(@order.origin)
+      @message[:order_id] = @order.id
+      @message[:service_type] = @order.service_type
+      @message[:origin] = @order.get_coordinate(@order.origin)
 
       session[:temp_data] = nil
 
-      kafka.deliver_message("#{data}", topic: 'driver_location')
+      kafka.deliver_message("#{@message}", topic: 'driver_location')
       redirect_to new_order_path
     else
       redirect_to session[:referer], notice: 'Your credit is insuficient, please top up'
@@ -76,6 +72,14 @@ class OrdersController < ApplicationController
 
     def order_params
       params.require(:order).permit(:user_id, :driver_id, :origin, :destination, :distance, :service_type, :payment_type, :price, :status)
+    end
+
+    def initiate_kafka
+      @kafka = Kafka.new(
+        seed_brokers: ['127.0.0.1:9092'],
+        client_id: 'goride',
+      )
+      @message = {}
     end
 end
 

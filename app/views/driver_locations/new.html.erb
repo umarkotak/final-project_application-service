@@ -2,7 +2,7 @@
 
 <h1>Set Driver Locations</h1>
 
-<%= form_for @driver_location, url: { action: 'create' } do |form| %>
+<%= form_for @driver_location, url: { action: 'micro_create' } do |form| %>
   <% if @driver_location.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@driver_location.errors.count, "error") %> prohibited this driver_location from being saved:</h2>

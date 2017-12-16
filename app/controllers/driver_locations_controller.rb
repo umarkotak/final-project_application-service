@@ -10,7 +10,6 @@ class DriverLocationsController < ApplicationController
     request = HTTP.get(url).to_s
     request = JSON.parse(request)
 
-    # array.sort_by { |hash| hash['id'].to_i }
     @micro_drivers = request.sort_by{ |hash| hash['driver_id'].to_i }
   end
 
