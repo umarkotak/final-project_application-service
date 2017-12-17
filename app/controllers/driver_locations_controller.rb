@@ -3,40 +3,13 @@ class DriverLocationsController < ApplicationController
   before_action :set_driver_location, only: [:create, :micro_create]
 
   def index
-    @driver = Driver.find(session[:driver_id])
-    @driver_locations = DriverLocation.all.order(driver_id: :asc)
-
-    url = "http://localhost:3001/driver_locations"
-    request = HTTP.get(url).to_s
-    request = JSON.parse(request)
-
-    @micro_drivers = request.sort_by{ |hash| hash['driver_id'].to_i }
+    request = request_json("http://localhost:3001/driver_locations")
+    @driver_locations = request.sort_by{ |hash| hash['driver_id'].to_i }
   end
 
   def new
     @driver = Driver.find(session[:driver_id])
     @driver_location = DriverLocation.new
-  end
-
-  def create
-    @driver_location.destroy if @driver_location
-
-    @driver_location = DriverLocation.new(driver_location_params)
-    @driver = Driver.find(session[:driver_id])
-    @driver_location.service_type = @driver.service_type
-
-    begin
-      @driver_location.get_coordinate(@driver_location.location)
-    rescue
-    end
-
-    respond_to do |format|
-      if @driver_location.save
-        format.html { redirect_to driver_locations_path, notice: 'Driver was successfully created.' }
-      else
-        format.html { render :new }
-      end
-    end
   end
 
   def micro_create
@@ -100,5 +73,10 @@ class DriverLocationsController < ApplicationController
         client_id: 'goride',
       )
       @message = {}
+    end
+
+    def request_json(url)
+      request = HTTP.get(url).to_s
+      request = JSON.parse(request)
     end
 end
