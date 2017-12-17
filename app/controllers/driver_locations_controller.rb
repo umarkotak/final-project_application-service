@@ -1,5 +1,5 @@
 class DriverLocationsController < ApplicationController
-  before_action :initiate_kafka, only: [:micro_create, :destroy]
+  before_action :initiate_kafka, only: [:create, :destroy]
   before_action :set_driver_location, only: [:create, :micro_create]
 
   def index
@@ -12,10 +12,9 @@ class DriverLocationsController < ApplicationController
     @driver_location = DriverLocation.new
   end
 
-  def micro_create
+  def create
     @message[:action] = 'set_driver_location'
 
-    @driver_location.destroy if @driver_location
     @driver_location = DriverLocation.new(driver_location_params)
     @driver = Driver.find(session[:driver_id])
     @driver_location.service_type = @driver.service_type
@@ -44,18 +43,11 @@ class DriverLocationsController < ApplicationController
   end
 
   def destroy
-    # @driver_location = DriverLocation.find(params[:id])
-    # @driver_location.status = 'offline'
-    # @driver_location.save
-
     @message[:action] = 'unset_driver_location'
     @message[:driver_id] = params[:id]
-
     @kafka.deliver_message("#{@message}", topic: 'driver_location')
 
-    respond_to do |format|
-      format.html { redirect_to driver_locations_url, notice: 'driver location was successfully unsetted.' }
-    end
+    redirect_to driver_locations_url, notice: 'driver location was successfully unsetted.'
   end
 
   private

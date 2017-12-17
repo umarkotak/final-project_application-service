@@ -71,7 +71,6 @@ class UsersController < ApplicationController
       params.require(:user).permit(:username, :password, :password_confirmation, :full_name, :email, :phone, :address, :credit, :topup_amount)
     end
 
-    # This will prevent other account to access this users data
     def authenticate
       if session[:user_id]
         redirect_to user_path(session[:user_id]) if @user.id != session[:user_id]

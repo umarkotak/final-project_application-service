@@ -20,7 +20,6 @@ class OrdersController < ApplicationController
       @order.set_distance(route_status)
       @order.set_price
       @order.user_id = session[:user_id]
-      @order.driver_id = @driver.try(:id)
 
       session[:temp_data] = @order
       session[:referer] = request.fullpath

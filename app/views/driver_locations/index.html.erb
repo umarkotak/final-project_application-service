@@ -24,7 +24,11 @@
         <td><%= driver_location['location'] %></td>
         <td><%= driver_location['lat'] %></td>
         <td><%= driver_location['lng'] %></td>
-        <td><%= driver_location['status'] %></td>
+        <% if driver_location['status'] == 'online' %>
+          <td><p style="color: green"><b><%= driver_location['status'] %></b></p></td>
+        <% else %>
+          <td><p style="color: red"><b><%= driver_location['status'] %></b></p></td>
+        <% end %>
         <td><%= driver_location['order_id'] %></td>
         <td><%= link_to 'Unset', "/driver_locations/#{driver_location['driver_id']}", method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
