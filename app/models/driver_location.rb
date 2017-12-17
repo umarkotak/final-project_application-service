@@ -12,9 +12,8 @@ class DriverLocation < ApplicationRecord
   end
 
   def get_coordinate(location_name)
-    url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{location_name.gsub(' ','+')}+&key=#{apikey}"
-    request = HTTP.get(url).to_s
-    request = JSON.parse(request)
+    request = request_json("https://maps.googleapis.com/maps/api/geocode/json?address=#{location_name.gsub(' ','+')}+&key=#{apikey}")
+
     self.lat = request["results"][0]["geometry"]["location"]["lat"]
     self.lng = request["results"][0]["geometry"]["location"]["lng"]
   end
@@ -32,5 +31,10 @@ class DriverLocation < ApplicationRecord
           errors.add(:location, "is invalid") if status == "NOT_FOUND"
         end
       end
+    end
+
+    def request_json(url)
+      request = HTTP.get(url).to_s
+      request = JSON.parse(request)
     end
 end
