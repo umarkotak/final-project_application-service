@@ -24,10 +24,8 @@ class DriversController < ApplicationController
     respond_to do |format|
       if @driver.save
         format.html { redirect_to login_driver_path, notice: 'Driver was successfully created.' }
-        format.json { render :show, status: :created, location: @driver }
       else
         format.html { render :new }
-        format.json { render json: @driver.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -36,10 +34,8 @@ class DriversController < ApplicationController
     respond_to do |format|
       if @driver.update(driver_params)
         format.html { redirect_to @driver, notice: 'Driver was successfully updated.' }
-        format.json { render :show, status: :ok, location: @driver }
       else
         format.html { render :edit }
-        format.json { render json: @driver.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -48,7 +44,6 @@ class DriversController < ApplicationController
     @driver.destroy
     respond_to do |format|
       format.html { redirect_to drivers_url, notice: 'Driver was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
@@ -61,33 +56,22 @@ class DriversController < ApplicationController
     respond_to do |format|
       if @driver.save && res
         format.html { redirect_to topup_driver_path, notice: 'Top up success.' }
-        format.json { render :show, status: :created, location: @driver }
       else
         format.html { redirect_to topup_driver_path, notice: 'Top up failed: amount is invalid' }
-        format.json { render json: @driver.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def job
-    url = "http://localhost:3001/driver_locations"
-    request = HTTP.get(url).to_s
-    request = JSON.parse(request)
-
+    request = request_json("http://localhost:3001/driver_locations")
     @driver_location = request.find { |hash| hash['driver_id'].to_i == session[:driver_id] }
-    @order = Order.find_by(id: @driver_location['order_id'])
-
-    # @driver_location = DriverLocation.find_by(driver_id: session[:driver_id])
-    # @order = Order.find_by(id: @driver_location.try(:order_id))
+    @order = Order.find_by(id: @driver_location['order_id']) if @driver_location
 
     @finished_orders = Order.where(driver_id: session[:driver_id]).order(id: :desc)
   end
 
-  def do_job
-    url = "http://localhost:3001/driver_locations"
-    request = HTTP.get(url).to_s
-    request = JSON.parse(request)
-
+  def do_job  
+    request = request_json("http://localhost:3001/driver_locations")
     @driver_location = request.find { |hash| hash['driver_id'].to_i == session[:driver_id] }
 
     @order = Order.find_by(id: @driver_location['order_id'])
@@ -95,27 +79,12 @@ class DriversController < ApplicationController
 
     Driver.complete_job(@order) if @order.status == 'completed'
 
-    @message[:action] = 'set_driver_location_done'
-    @message[:driver_id] = session[:driver_id]
-
-    @kafka.deliver_message("#{@message}", topic: 'driver_location')
-
-    # MONOLITIC CODE ASSETS
-    # ======================================================
-
-    # @driver_location = DriverLocation.find_by(driver_id: session[:driver_id])
-    
-    # @order = Order.find_by(id: @driver_location.order_id)
-    # @order.status = params[:status]
-
-    # Driver.complete_job(@order) if @order.status == 'completed'
-
-    # @driver_location.order_id = nil
-    # @driver_location.status = 'online'
-
     respond_to do |format|
-      # if @driver_location.save && @order.save
       if @order.save
+        @message[:action] = 'set_driver_location_done'
+        @message[:driver_id] = session[:driver_id]
+        @kafka.deliver_message("#{@message}", topic: 'driver_location')
+        
         format.html { redirect_to job_driver_path(session[:driver_id]), notice: "Order #{@order.status}" }
       else
         format.html { redirect_to job_driver_path(session[:driver_id]), notice: 'Something wrong' }
@@ -146,5 +115,10 @@ class DriversController < ApplicationController
         client_id: 'goride',
       )
       @message = {}
+    end
+
+    def request_json(url)
+      request = HTTP.get(url).to_s
+      request = JSON.parse(request)
     end
 end

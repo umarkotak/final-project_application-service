@@ -1,6 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-
 <% if @driver_location %>
   <h1>Current Job</h1>
   <table border="1" width="100%">
@@ -36,12 +35,14 @@
   </table>
 
   <br>
+  <% if @order %>
   <div align="right">
     <%= form_with(model: @driver, local: true) do |form| %>
       <%= form.select(:status, [['completed','completed'], ['canceled','canceled']]) %>
       <%= form.submit 'Submit' %>
     <% end %>
   </div>
+  <% end %>
         
   <hr>
 
