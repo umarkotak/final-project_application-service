@@ -155,12 +155,12 @@ RSpec.describe DriversController, type: :controller do
   end
 
   describe "GET #job" do
-    it "assign current job if exist" do
-      order = create(:order, driver: @driver)
-      driver_location = create(:driver_location, driver: @driver, order: order)
-      get :job, params: { id: @driver }
-      expect(assigns(:order)).to eq(order)
-    end
+    # it "assign current job if exist" do
+    #   order = create(:order, driver: @driver)
+    #   driver_location = create(:driver_location, driver: @driver, order: order)
+    #   get :job, params: { id: @driver }
+    #   expect(assigns(:order)).to eq(order)
+    # end
 
     it "will populates jobs history" do
       order = create(:order, driver: @driver)
