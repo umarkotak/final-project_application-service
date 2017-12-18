@@ -15,9 +15,7 @@ class OrdersController < ApplicationController
   def confirm_order
     @order  = Order.new(order_params)
 
-    route_status = @order.validate_route(@order.origin, @order.destination)
-    if route_status
-      @order.set_distance(route_status)
+    if @order.get_cached_routes
       @order.set_price
       @order.user_id = session[:user_id]
 
@@ -26,7 +24,20 @@ class OrdersController < ApplicationController
 
       @status = true
     else
-      @status = false
+      route_status = @order.validate_route(@order.origin, @order.destination)
+      if route_status
+        @order.set_distance(route_status)
+        @order.set_price
+        @order.user_id = session[:user_id]
+        @order.set_cached_routes
+
+        session[:temp_data] = @order
+        session[:referer] = request.fullpath
+
+        @status = true
+      else
+        @status = false
+      end
     end
   end
 
@@ -46,7 +57,12 @@ class OrdersController < ApplicationController
       @order.save
       @message[:order_id] = @order.id
       @message[:service_type] = @order.service_type
-      @message[:origin] = @order.get_coordinate(@order.origin)
+      
+      if @order.get_cached_routes
+        @message[:origin] = @order.get_cached_routes
+      else
+        @message[:origin] = @order.get_coordinate(@order.origin)
+      end
 
       session[:temp_data] = nil
 

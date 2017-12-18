@@ -65,4 +65,41 @@ class Order < ApplicationRecord
     user.credit > self.price ? status = true : status = false
   end
 
+  def get_cached_routes
+    result = {}
+    url = "http://localhost:3002/routes?origin=#{self.origin.gsub(' ', '%20')}&destination=#{self.destination.gsub(' ', '%20')}"
+    begin request = HTTP.get(url).to_s
+      request = JSON.parse(request)
+      if request['distance'] != ""
+        self.distance = request['distance'].to_f
+        result[:lat] = request['lat'].to_f
+        result[:lng] = request['lng'].to_f
+
+        result
+      else
+        false
+      end
+    rescue
+      false
+    end
+  end
+
+  def set_cached_routes
+    origin = get_coordinate(self.origin)
+
+    url = 'http://localhost:3002/routes'
+    form_data = {
+      'origin' => self.origin, 
+      'destination' => self.destination,
+      'lat' => origin[:lat],
+      'lng' => origin[:lng],
+      'distance' => self.distance
+    }
+    
+    begin
+      HTTP.post(url, :form => form_data)
+    rescue
+    end
+  end
+
 end
