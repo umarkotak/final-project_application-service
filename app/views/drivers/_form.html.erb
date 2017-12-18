@@ -48,7 +48,7 @@
 
   <div class="field">
     <%= form.label :service_type %>
-    <%= form.text_field :service_type, id: :driver_service_type %>
+    <%= form.select(:service_type, [['gojek','gojek'], ['gocar','gocar']]) %>
   </div>
 
   <div class="actions">
