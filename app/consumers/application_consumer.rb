@@ -15,8 +15,11 @@ class ApplicationConsumer < Racecar::Consumer
   end
 
   def set_driver_id_to_order(data)
-    order = Order.find(data[:order_id])
-    order.driver_id = data[:driver_id]
-    order.save
+    begin
+      order = Order.find(data[:order_id])
+      order.driver_id = data[:driver_id]
+      order.save
+    rescue
+    end
   end
 end
