@@ -1,36 +1,42 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Set Driver Locations</h1>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <b>Set Driver Location</b>
+  </div>
 
-<%= form_for @driver_location, url: { action: 'create' } do |form| %>
-  <% if @driver_location.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@driver_location.errors.count, "error") %> prohibited this driver_location from being saved:</h2>
+  <div class="panel-body">
+    <%= form_for @driver_location, url: { action: 'create' } do |form| %>
+      <% if @driver_location.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@driver_location.errors.count, "error") %> prohibited this driver_location from being saved:</h2>
 
-      <ul>
-      <% @driver_location.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+          <% @driver_location.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :driver_id %>
-    <%= form.text_field :driver_id, id: :driver_locations_driver_id, value: session[:driver_id], :readonly => true %>
-  </div>
+      <div class="field">
+        <%= form.label :driver_id %>
+        <%= form.text_field :driver_id, id: :driver_locations_driver_id, value: session[:driver_id], :readonly => true %>
+      </div>
 
-  <div class="field">
-    <%= form.label :location %>
-    <%= form.text_field :location, id: :driver_locations_location %>
-  </div>
+      <div class="field">
+        <%= form.label :location %>
+        <%= form.text_field :location, id: :driver_locations_location %>
+      </div>
 
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.select(:status, [['online','online'], ['offline','offline']]) %>
-  </div>
+      <div class="field">
+        <%= form.label :status %>
+        <%= form.select(:status, [['online','online'], ['offline','offline']]) %>
+      </div>
 
-  <div class="actions">
-    <%= form.submit %>
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

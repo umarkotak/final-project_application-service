@@ -12,11 +12,12 @@ body, body > p, body > ol, body > ul, body > td {margin: 5px !important}
   text-align: center;
 
   img {
+    background-color: #ccefff;
     position: absolute;
     top: 0;
     left: 0;
     height: 60px;
-    width: 235px;
+    width: 200px;
   }
 }
 
@@ -38,7 +39,7 @@ body, body > p, body > ol, body > ul, body > td {margin: 5px !important}
   #side {
     padding: 0;
     background: #99ccff;
-    width: 235px;
+    width: 200px;
 
     ul {
       padding: 0;
@@ -48,19 +49,7 @@ body, body > p, body > ol, body > ul, body > td {margin: 5px !important}
         background-color: #0099e6;
         padding: 1px;
 
-        a:link, a:visited {
-          background-color: #0099e6;
-          color: white;
-          padding: 2px;
-          width: 235px;
-          text-align: left;
-          text-decoration: none;
-          display: inline-block;
-        }
-
-        a:hover, a:active {
-          background-color: red;
-        }
+        
       }
     }
   }
