@@ -1,82 +1,93 @@
 <p id="notice"><%= notice %></p>
 
 <% if @any_order %>
-  <h1>Current Order</h1>
-  <p>Please wait for your driver</p>
-  <table border="1" width="100%">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>User ID</th>
-        <th>Driver ID</th>
-        <th>Origin</th>
-        <th>Destination</th>
-        <th>Distance</th>
-        <th>Service Type</th>
-        <th>Payment Type</th>
-        <th>Price</th>
-        <th>Status</th>
-      </tr>
-    </thead>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <b>Current Order</b>
+    </div>
 
-    <tbody>
-      <tr>
-        <td><%= @any_order.try(:id) %></td>
-        <td><%= @any_order.try(:user_id) %></td>
-        <td><%= @any_order.try(:driver_id) %></td>
-        <td><%= @any_order.try(:origin) %></td>
-        <td><%= @any_order.try(:destination) %></td>
-        <td><%= @any_order.try(:distance) %></td>
-        <td><%= @any_order.try(:service_type) %></td>
-        <td><%= @any_order.try(:payment_type) %></td>
-        <td><%= @any_order.try(:price) %></td>
-        <td><%= @any_order.try(:status) %></td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="panel-body">
+      <p>Please wait for your driver</p>
+      
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User ID</th>
+            <th>Driver ID</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Distance</th>
+            <th>Service Type</th>
+            <th>Payment Type</th>
+            <th>Price</th>
+            <th>Status</th>
+          </tr>
+        </thead>
 
-  <br>
+        <tbody>
+          <tr>
+            <td><%= @any_order.try(:id) %></td>
+            <td><%= @any_order.try(:user_id) %></td>
+            <td><%= @any_order.try(:driver_id) %></td>
+            <td><%= @any_order.try(:origin) %></td>
+            <td><%= @any_order.try(:destination) %></td>
+            <td><%= @any_order.try(:distance) %></td>
+            <td><%= @any_order.try(:service_type) %></td>
+            <td><%= @any_order.try(:payment_type) %></td>
+            <td><%= @any_order.try(:price) %></td>
+            <td><%= @any_order.try(:status) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 <% else %>
 
-<h1>New Orders</h1>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <b>New Orders</b>
+    </div>
 
-<fieldset>
-  <%= form_for @order, url: {action: 'confirm_order'}, html: {method: 'get'} do |form| %>
-    <% if @order.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+    <div class="panel-body">
+      <%= form_for @order, url: {action: 'confirm_order'}, html: {method: 'get'} do |form| %>
+        <% if @order.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
-        <ul>
-        <% @order.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+            <ul>
+            <% @order.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
         <% end %>
-        </ul>
-      </div>
-    <% end %>
 
-    <div class="field">
-      <p><b>User ID : </b><%= session[:user_id] %></p>
-    </div>
+        <div class="field">
+          <p><b>User ID : </b><%= session[:user_id] %></p>
+        </div>
 
-    <div class="field">
-      <b><%= form.label :origin %></b>
-      <%= form.text_area :origin, id: :order_origin %>
-    </div>
+        <div class="field">
+          <b><%= form.label :origin %></b>
+          <%= form.text_area :origin, id: :order_origin %>
+        </div>
 
-    <div class="field">
-      <b><%= form.label :destination %></b>
-      <%= form.text_area :destination, id: :order_destination %>
-    </div>
+        <div class="field">
+          <b><%= form.label :destination %></b>
+          <%= form.text_area :destination, id: :order_destination %>
+        </div>
 
-    <div class="field">
-      <%= form.label :service_type %>
-      <%= form.select(:service_type, [['gojek','gojek'], ['gocar','gocar']]) %>
-    </div>
+        <div class="field">
+          <%= form.label :service_type %>
+          <%= form.select(:service_type, [['gojek','gojek'], ['gocar','gocar']]) %>
+        </div>
 
-    <div class="actions">
-      <%= form.submit %>
+        <div class="actions">
+          <%= form.submit %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-</fieldset>
+  </div>
 
 <% end %>

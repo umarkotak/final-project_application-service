@@ -2,29 +2,3 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.go_food_form {
-  
-
-  form { 
-    label {
-      width: 15em;
-      float: left;
-      text-align: right;
-      padding-top: 0.2em;
-      margin-right: 0.1em;
-      display: block;
-    }
-    
-    select, textarea, input {
-      margin-left: 0.5em;
-    }
-    
-    .submit {
-      margin-left: 4em;
-    }
-    
-    br {
-      display: none;
-    }
-  }
-}

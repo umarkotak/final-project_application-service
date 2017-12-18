@@ -1,53 +1,61 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Confirm Order</h1>
-
-<%= form_for @order, url: {action: 'micro_order'} do |form| %>
-  <div class="field">
-    <p><b>User ID : </b><%= session[:user_id] %></p>
+<div class="panel panel-primary" style="width: 40%">
+  <div class="panel-heading">
+    <b>Confirm Order</b>
   </div>
 
-  <fieldset>
-    <% if @status || @driver %>
-    <table>
-      <tr valign="top">
-        <td width="200px">
-          <div class="field" style="border: 1px solid black; padding: 5px;">
-            <p><b>Origin : </b></p>
-            <p><%= @order.origin %></p>
+  <div class="panel-body">
+    <%= form_for @order, url: {action: 'micro_order'} do |form| %>
+      <% if @status || @driver %>
+        <div class="form-group">
+          <table class="table">
+            <tr>
+              <td><b>User ID : </b></td>
+              <td><%= session[:user_id] %></td>
+            </tr>
 
-            <p><b>Destination : </b></p>
-            <p><%= @order.destination %></p>
-          </div>
-        </td>
+            <tr>
+              <td><b>Origin : </b></td>
+              <td><%= @order.origin %></td>
+            </tr>
 
-        <td>
-          <div class="field" style="border: 1px solid black; padding: 5px;">
-            <p><b>Order Details : </b></p>
-            <p><b>Service Type : </b><%= @order.service_type %></p>
+            <tr>
+              <td><b>Destination : </b></td>
+              <td><%= @order.destination %></td>
+            </tr>
 
-            <p><b>Distance : </b><%= @order.distance %> m</p>
+            <tr>
+              <td><b>Service Type : </b></td>
+              <td><%= @order.service_type %></td>
+            </tr>
 
-            <p><b>Price : </b><%= number_to_currency(@order.price, unit: "Rp. ", delimiter: ".", separator: ",") %></p>
-          </div>
-        </td>
-      </tr>
-    </table>
+            <tr>
+              <td><b>Distance : </b></td>
+              <td><%= @order.distance %> km</td>
+            </tr>
 
-      <div class="field">
-        <%= form.label :payment_type %>
-        <%= form.select(:payment_type, [['cash','cash'], ['gopay','gopay']]) %>
-      </div>
+            <tr>
+              <td><b>Price : </b></td>
+              <td><%= number_to_currency(@order.price, unit: "Rp. ", delimiter: ".", separator: ",") %></td>
+            </tr>
+          </table>
+        </div>
 
-      <div class="actions">
-        <%= form.submit %>
-      </div>
-    <% else %>
-      <p><b>Location is Invalid</b></p>
-      <%= link_to "New Order", new_order_path %>
-      <br>
+        <div class="field">
+          <%= form.label :payment_type %>
+          <%= form.select(:payment_type, [['cash','cash'], ['gopay','gopay']]) %>
+        </div>
+
+        <div class="actions">
+          <%= form.submit %>
+        </div>
+
+      <% else %>
+        <p style="color: red;"><b>Location is Invalid</b></p>
+        <%= link_to "New Order", new_order_path, class: 'btn btn-primary btn-sm' %>
+      <% end %>
     <% end %>
+  </div>
 
-    <br>
-  </fieldset>
-<% end %>
+</div>

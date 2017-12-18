@@ -1,6 +1,14 @@
-<h1>Editing Driver</h1>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    Editing Driver
+  </div>
 
-<%= render 'form', driver: @driver %>
+  <div class="panel-body">
+    <%= render 'form', driver: @driver %>
+  </div>
 
-<%= link_to 'Show', @driver %> |
-<%= link_to 'Back', drivers_path %>
+  <div class="panel-footer">
+    <%= link_to 'Show', @driver, class: 'btn btn-primary btn-sm' %> 
+    <%= link_to 'Back', drivers_path, class: 'btn btn-primary btn-sm' %>
+  </div>
+</div>

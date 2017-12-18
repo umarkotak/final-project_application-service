@@ -1,32 +1,12 @@
 <div class="go_food_form">
   <% if flash[:alert] %>
-    <p id="notice"><%= flash[:alert] %></p>
+    <div class="alert alert-danger">
+      <p><%= flash[:alert] %></p>
+    </div>
   <% end %>
 
   <%= form_tag('/login', method: 'post') do %>
-    <fieldset>
-      <legend>User log in</legend>
-
-      <div>
-        <%= label_tag :username, 'username' %>
-        <%= text_field_tag :username, params[:username] %>
-      </div>
-
-      <div>
-        <%= label_tag :password, 'password' %>
-        <%= password_field_tag :password, params[:password] %>
-      </div>
-      
-      <div>
-        <%= link_to 'Register', '/users/new', class: 'btn btn-success' %>
-        <%= button_to 'Login', login_path, method: :create, class: 'btn btn-primary' %>
-      </div>
-
-    </fieldset>
-  <% end %>
-
-  <%= form_tag('/login', method: 'post') do %>
-  <div class="panel panel-primary">
+    <div class="panel panel-primary">
       <div class="panel-heading">
         User Login
       </div>
@@ -34,12 +14,12 @@
       <div class="panel-body">
         <div class="form-group">
           <%= label_tag :username, 'username' %>
-          <%= text_field_tag :username, params[:username] %>
+          <%= text_field_tag :username, params[:username], required: true %>
         </div>
 
         <div class="form-group">
           <%= label_tag :password, 'password' %>
-          <%= password_field_tag :password, params[:password] %>
+          <%= password_field_tag :password, params[:password], required: true %>
         </div>
       </div>
 
@@ -47,7 +27,7 @@
         <%= link_to 'Register', '/users/new', class: 'btn btn-success' %>
         <%= button_to 'Login', login_path, method: :create, class: 'btn btn-primary' %>
       </div>
-  </div>
+    </div>
   <% end %>
 
 </div>

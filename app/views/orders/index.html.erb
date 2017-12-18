@@ -1,42 +1,58 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Orders</h1>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <b>Orders</b>
+  </div>
 
-<table border="1" width="100%">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>User ID</th>
-      <th>Driver ID</th>
-      <th>Origin</th>
-      <th>Destination</th>
-      <th>Distance</th>
-      <th>Service Type</th>
-      <th>Payment Type</th>
-      <th>Price</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-  </thead>
+  <div class="panel-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User ID</th>
+          <th>Driver ID</th>
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Distance</th>
+          <th>Service Type</th>
+          <th>Payment Type</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @orders.each do |order| %>
-      <tr>
-        <td><%= order.try(:id) %></td>
-        <td><%= order.user_id %></td>
-        <td><%= order.driver_id %></td>
-        <td><%= order.origin %></td>
-        <td><%= order.destination %></td>
-        <td><%= order.distance %></td>
-        <td><%= order.service_type %></td>
-        <td><%= order.payment_type %></td>
-        <td><%= order.price %></td>
-        <td><%= order.status %></td>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= order.try(:id) %></td>
+            <td><%= order.user_id %></td>
+            <td><%= order.driver_id %></td>
+            <td><%= order.origin %></td>
+            <td><%= order.destination %></td>
+            <td><%= order.distance %></td>
+            <td><%= order.service_type %></td>
+            <td><%= order.payment_type %></td>
+            <td><%= order.price %></td>
+            <td>
+              <% if order.status == 'completed' %>
+                <span class="label label-success"><%= order.status %><span>
+              <% else %>
+                <span class="label label-danger"><%= order.status %><span>
+              <% end %>
+            </td>
 
-        <td><%= link_to 'Destroy', order_path(order), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+            <td><%= link_to 'Destroy', order_path(order), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
-<%= link_to "New Order", new_order_path %>
+  <% if session[:user_id] %>
+    <div class="panel-footer">
+      <%= link_to "New Order", new_order_path, class: 'btn btn-primary btn-sm' %>
+    </div>
+  <% end %>
+</div>

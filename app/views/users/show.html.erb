@@ -1,69 +1,94 @@
 <p id="notice"><%= notice %></p>
 
-<h1>My Profile</h1>
-<table border="1">
-  <tr>
-    <td><strong>Username:</strong></td>
-    <td><%= @user.username %></td>
-  </tr>
-  <tr>
-    <td><strong>Full name:</strong></td>
-    <td><%= @user.full_name %></td>
-  </tr>
-  <tr>
-    <td><strong>Email:</strong></td>
-    <td><%= @user.email %></td>
-  </tr>
-  <tr>
-    <td><strong>Phone:</strong></td>
-    <td><%= @user.phone %></td>
-  </tr>
-  <tr>
-    <td><strong>Address:</strong></td>
-    <td><%= @user.address %></td>
-  </tr>
-  <tr>
-    <td><strong>Credit:</strong></td>
-    <td><%= @user.credit %></td>
-  </tr>
-</table>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <b>My Profile</b>
+      </div>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Top Up', topup_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <tr>
+            <td><strong>Username:</strong></td>
+            <td><%= @user.username %></td>
+          </tr>
+          <tr>
+            <td><strong>Full name:</strong></td>
+            <td><%= @user.full_name %></td>
+          </tr>
+          <tr>
+            <td><strong>Email:</strong></td>
+            <td><%= @user.email %></td>
+          </tr>
+          <tr>
+            <td><strong>Phone:</strong></td>
+            <td><%= @user.phone %></td>
+          </tr>
+          <tr>
+            <td><strong>Address:</strong></td>
+            <td><%= @user.address %></td>
+          </tr>
+          <tr>
+            <td><strong>Credit:</strong></td>
+            <td><%= @user.credit %></td>
+          </tr>
+        </table>
+      </div>
 
-<br><br><hr>
-<h1>Order History</h1>
-<table border="1" width="100%">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>User ID</th>
-      <th>Driver ID</th>
-      <th>Origin</th>
-      <th>Destination</th>
-      <th>Distance</th>
-      <th>Service Type</th>
-      <th>Payment Type</th>
-      <th>Price</th>
-      <th>Status</th>
-    </tr>
-  </thead>
+      <div class="panel-footer" align="right">
+        <%= link_to 'Edit', edit_user_path(@user), class: 'btn btn-primary btn-sm' %>
+        <%= link_to 'Top Up', topup_user_path(@user), class: 'btn btn-primary btn-sm' %>
+        <%= link_to 'Back', users_path, class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <tbody>
-    <% @order_histories.each do |order| %>
-      <tr>
-        <td><%= order.try(:id) %></td>
-        <td><%= order.user_id %></td>
-        <td><%= order.driver_id %></td>
-        <td><%= order.origin %></td>
-        <td><%= order.destination %></td>
-        <td><%= order.distance %></td>
-        <td><%= order.service_type %></td>
-        <td><%= order.payment_type %></td>
-        <td><%= order.price %></td>
-        <td><%= order.status %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <b>Order History</b>
+  </div>
+
+  <div class="panel-body">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User ID</th>
+          <th>Driver ID</th>
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Distance</th>
+          <th>Service Type</th>
+          <th>Payment Type</th>
+          <th>Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @order_histories.each do |order| %>
+          <tr>
+            <td><%= order.try(:id) %></td>
+            <td><%= order.user_id %></td>
+            <td><%= order.driver_id %></td>
+            <td><%= order.origin %></td>
+            <td><%= order.destination %></td>
+            <td><%= order.distance %></td>
+            <td><%= order.service_type %></td>
+            <td><%= order.payment_type %></td>
+            <td><%= order.price %></td>
+            <td>
+              <% if order.status == 'completed' %>
+                <span class="label label-success"><%= order.status %><span>
+              <% else %>
+                <span class="label label-danger"><%= order.status %><span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,85 +1,104 @@
 <p id="notice"><%= notice %></p>
 
 <% if @driver_location %>
-  <h1>Current Job</h1>
-  <table border="1" width="100%">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>User ID</th>
-        <th>Driver ID</th>
-        <th>Origin</th>
-        <th>Destination</th>
-        <th>Distance</th>
-        <th>Service Type</th>
-        <th>Payment Type</th>
-        <th>Price</th>
-        <th>Status</th>
-      </tr>
-    </thead>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <b>Current Job</b>
+    </div>
 
-    <tbody>
-      <tr>
-        <td><%= @order.try(:id) %></td>
-        <td><%= @order.try(:user_id) %></td>
-        <td><%= @order.try(:driver_id) %></td>
-        <td><%= @order.try(:origin) %></td>
-        <td><%= @order.try(:destination) %></td>
-        <td><%= @order.try(:distance) %></td>
-        <td><%= @order.try(:service_type) %></td>
-        <td><%= @order.try(:payment_type) %></td>
-        <td><%= @order.try(:price) %></td>
-        <td><%= @order.try(:status) %></td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="panel-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User ID</th>
+            <th>Driver ID</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Distance</th>
+            <th>Service Type</th>
+            <th>Payment Type</th>
+            <th>Price</th>
+            <th>Status</th>
+          </tr>
+        </thead>
 
-  <br>
-  <% if @order %>
-  <div align="right">
-    <%= form_with(model: @driver, local: true) do |form| %>
-      <%= form.select(:status, [['completed','completed'], ['canceled','canceled']]) %>
-      <%= form.submit 'Submit' %>
-    <% end %>
-  </div>
-  <% end %>
-        
-  <hr>
+        <tbody>
+          <tr>
+            <td><%= @order.try(:id) %></td>
+            <td><%= @order.try(:user_id) %></td>
+            <td><%= @order.try(:driver_id) %></td>
+            <td><%= @order.try(:origin) %></td>
+            <td><%= @order.try(:destination) %></td>
+            <td><%= @order.try(:distance) %></td>
+            <td><%= @order.try(:service_type) %></td>
+            <td><%= @order.try(:payment_type) %></td>
+            <td><%= @order.try(:price) %></td>
+            <td><%= @order.try(:status) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <h1>Job History</h1>
-  <table border="1" width="100%">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>User ID</th>
-        <th>Driver ID</th>
-        <th>Origin</th>
-        <th>Destination</th>
-        <th>Distance</th>
-        <th>Service Type</th>
-        <th>Payment Type</th>
-        <th>Price</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @finished_orders.each do |order| %>
-        <tr>
-          <td><%= order.try(:id) %></td>
-          <td><%= order.try(:user_id) %></td>
-          <td><%= order.try(:driver_id) %></td>
-          <td><%= order.try(:origin) %></td>
-          <td><%= order.try(:destination) %></td>
-          <td><%= order.try(:distance) %></td>
-          <td><%= order.try(:service_type) %></td>
-          <td><%= order.try(:payment_type) %></td>
-          <td><%= order.try(:price) %></td>
-          <td><%= order.try(:status) %></td>
-        </tr>
+    <div class="panel-footer">
+      <% if @order %>
+        <div align="right">
+          <%= form_with(model: @driver, local: true) do |form| %>
+            <%= form.select(:status, [['completed','completed'], ['canceled','canceled']]) %>
+            <%= form.submit 'Submit' %>
+          <% end %>
+        </div>
       <% end %>
-    </tbody>
-  </table>
+    </div>
+  </div>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <b>Job History</b>
+    </div>
+
+    <div class="panel-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User ID</th>
+            <th>Driver ID</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Distance</th>
+            <th>Service Type</th>
+            <th>Payment Type</th>
+            <th>Price</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @finished_orders.each do |order| %>
+            <tr>
+              <td><%= order.try(:id) %></td>
+              <td><%= order.try(:user_id) %></td>
+              <td><%= order.try(:driver_id) %></td>
+              <td><%= order.try(:origin) %></td>
+              <td><%= order.try(:destination) %></td>
+              <td><%= order.try(:distance) %></td>
+              <td><%= order.try(:service_type) %></td>
+              <td><%= order.try(:payment_type) %></td>
+              <td><%= order.try(:price) %></td>
+              <td>
+                <% if order.try(:status) == 'completed' %>
+                  <span class="label label-success"><%= order.try(:status) %><span>
+                <% else %>
+                  <span class="label label-danger"><%= order.try(:status) %><span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 <% else %>
   <p><strong>Please set your location first</strong> <%= link_to 'Set Location', driver_locations_path %></p>
 <% end %>

@@ -1,37 +1,50 @@
 <p id="notice"><%= notice %></p>
 
-<table border="1">
-  <tr>
-    <td><strong>Username:</strong></td>
-    <td><%= @driver.username %></td>
-  </tr>
-  <tr>
-    <td><strong>Full name:</strong></td>
-    <td><%= @driver.full_name %></td>
-  </tr>
-  <tr>
-    <td><strong>Email:</strong></td>
-    <td><%= @driver.email %></td>
-  </tr>
-  <tr>
-    <td><strong>Phone:</strong></td>
-    <td><%= @driver.phone %></td>
-  </tr>
-  <tr>
-    <td><strong>Address:</strong></td>
-    <td><%= @driver.address %></td>
-  </tr>
-  <tr>
-    <td><strong>Service Type:</strong></td>
-    <td><%= @driver.service_type %></td>
-  </tr>
-  <tr>
-    <td><strong>Credit:</strong></td>
-    <td><%= @driver.credit %></td>
-  </tr>
-</table>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <b>My Driver Profile</b>
+      </div>
 
-<%= link_to 'Edit', edit_driver_path(@driver) %> |
-<%= link_to 'Top Up', topup_driver_path(@driver) %> |
-<%= link_to 'Back', drivers_path %>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <tr>
+            <td><strong>Username:</strong></td>
+            <td><%= @driver.username %></td>
+          </tr>
+          <tr>
+            <td><strong>Full name:</strong></td>
+            <td><%= @driver.full_name %></td>
+          </tr>
+          <tr>
+            <td><strong>Email:</strong></td>
+            <td><%= @driver.email %></td>
+          </tr>
+          <tr>
+            <td><strong>Phone:</strong></td>
+            <td><%= @driver.phone %></td>
+          </tr>
+          <tr>
+            <td><strong>Address:</strong></td>
+            <td><%= @driver.address %></td>
+          </tr>
+          <tr>
+            <td><strong>Service Type:</strong></td>
+            <td><%= @driver.service_type %></td>
+          </tr>
+          <tr>
+            <td><strong>Credit:</strong></td>
+            <td><%= @driver.credit %></td>
+          </tr>
+        </table>
+      </div>
 
+      <div class="panel-footer" align="right">
+        <%= link_to 'Edit', edit_driver_path(@driver), class: 'btn btn-primary btn-sm' %>
+        <%= link_to 'Top Up', topup_driver_path(@driver), class: 'btn btn-primary btn-sm' %>
+        <%= link_to 'Back', drivers_path, class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+  </div>
+</div>

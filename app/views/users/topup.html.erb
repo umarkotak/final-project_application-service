@@ -1,26 +1,30 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Top Up Credit</h1>
+<div class="panel panel-primary" style="width: 40%">
+  <div class="panel-heading">
+    Topup Credit
+  </div>
 
-<fieldset>
-  <p>
-    <strong>Username : </strong>
-    <%= @user.username %>
-  </p>
+  <div class="panel-body">
+    <p>
+      <strong>Username : </strong>
+      <%= @user.username %>
+    </p>
 
-  <p>
-    <strong>Current Credit : </strong>
-    <%= number_to_currency(@user.credit, unit: "Rp. ", delimiter: ".", separator: ",") %>
-  </p>
+    <p>
+      <strong>Current Credit : </strong>
+      <%= number_to_currency(@user.credit, unit: "Rp. ", delimiter: ".", separator: ",") %>
+    </p>
 
-  <%= form_for user_path, method: :patch do |form| %>
-    <div class="field">
-      <p><strong>Top Up Amount : </strong></p>
-      <p><%= text_field_tag :topup_amount, params[:topup_amount] %></p>
-    </div>
+    <%= form_for user_path, method: :patch do |form| %>
+      <div class="field">
+        <p><strong>Top Up Amount : </strong></p>
+        <p><%= text_field_tag :topup_amount, params[:topup_amount] %></p>
+      </div>
 
-    <div class="actions">
-      <%= form.submit 'Top Up' %>
-    </div>
-  <% end %>
-</fieldset>
+      <div class="actions">
+        <%= form.submit 'Top Up' %>
+      </div>
+    <% end %>
+  </div>
+</div>

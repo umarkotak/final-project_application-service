@@ -1,5 +1,13 @@
-<h1>New Driver</h1>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    New Driver
+  </div>
 
-<%= render 'form', driver: @driver %>
+  <div class="panel-body">
+    <%= render 'form', driver: @driver %>
+  </div>
 
-<%= link_to 'Back', drivers_path %>
+  <div class="panel-footer">
+    <%= link_to 'Back', drivers_path, class: 'btn btn-primary btn-sm' %>
+  </div>
+</div>

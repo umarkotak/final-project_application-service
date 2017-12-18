@@ -1,26 +1,30 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Drivername:</strong>
-  <%= @driver.username %>
-</p>
+<div class="panel panel-primary" style="width: 40%">
+  <div class="panel-heading">
+    Topup Credit
+  </div>
 
-<p>
-  <strong>Current Balance:</strong>
-  <%= @driver.credit %>
-</p>
+  <div class="panel-body">
+    <p>
+      <strong>Drivername:</strong>
+      <%= @driver.username %>
+    </p>
 
-<%= form_for driver_path, method: :patch do |form| %>
-  <fieldset>
-    <legend>Top Up GoPay Credit</legend>
-    <div class="field">
-      <%= form.label :topup_amount %>
-      <%# form.text_field :topup_amount, id: :topup_amount %>
-      <%= text_field_tag :topup_amount, params[:topup_amount] %>
-    </div>
+    <p>
+      <strong>Current Credit : </strong>
+      <%= number_to_currency(@driver.credit, unit: "Rp. ", delimiter: ".", separator: ",") %>
+    </p>
 
-    <div class="actions">
-      <%= form.submit 'Top Up' %>
-    </div>
-  </fieldset>
-<% end %>
+    <%= form_for driver_path, method: :patch do |form| %>
+      <div class="field">
+        <p><strong>Top Up Amount : </strong></p>
+        <p><%= text_field_tag :topup_amount, params[:topup_amount] %></p>
+      </div>
+
+      <div class="actions">
+        <%= form.submit 'Top Up' %>
+      </div>
+    <% end %>
+  </div>
+</div>
