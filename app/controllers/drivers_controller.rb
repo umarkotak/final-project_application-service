@@ -77,14 +77,20 @@ class DriversController < ApplicationController
     @order = Order.find_by(id: @driver_location['order_id'])
     @order.status = params[:status]
 
-    Driver.complete_job(@order) if @order.status == 'completed'
+    @message[:action] = 'set_driver_location_done'
+    @message[:driver_id] = session[:driver_id]
+    if @order.status == 'completed'
+      Driver.complete_job(@order)
+
+      @message[:location] = @order.destination
+      @message[:coordinate] = get_coordinate(@order.destination)
+    else
+      @message[:location] = @order.origin
+      @message[:coordinate] = get_coordinate(@order.origin)
+    end
 
     respond_to do |format|
       if @order.save
-        @message[:action] = 'set_driver_location_done'
-        @message[:driver_id] = session[:driver_id]
-        @message[:location] = @order.destination
-        @message[:coordinate] = get_coordinate(@order.destination)
         @kafka.deliver_message("#{@message}", topic: 'driver_location')
         
         format.html { redirect_to job_driver_path(session[:driver_id]), notice: "Order #{@order.status}" }
