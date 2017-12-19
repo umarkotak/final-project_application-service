@@ -66,6 +66,7 @@ class DriversController < ApplicationController
     request = request_json("http://localhost:3001/driver_locations")
     @driver_location = request.find { |hash| hash['driver_id'].to_i == session[:driver_id] }
     @order = Order.find_by(id: @driver_location['order_id']) if @driver_location
+    @user = User.find(@order.user_id) if @order
 
     @finished_orders = Order.where(driver_id: session[:driver_id]).order(id: :desc)
   end

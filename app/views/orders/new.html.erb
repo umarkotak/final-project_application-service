@@ -48,6 +48,13 @@
           </tr>
         </tbody>
       </table>
+
+      <% if @driver %>
+        <p>|
+          <b>Driver name : </b><%= @driver.full_name %> | 
+          <b>Phone number : </b><%= @driver.phone %> |
+        </p>
+      <% end %>
     </div>
   </div>
 
