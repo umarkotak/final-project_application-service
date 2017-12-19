@@ -21,10 +21,12 @@ class ApplicationController < ActionController::Base
     end
 
     def driver_job_notification
-      request = request_json("http://localhost:3001/driver_locations")
-      @notification = false
-      request.each do |driver_location|
-        @notification = driver_location if driver_location['driver_id'] == session['driver_id'] && driver_location['status'] == 'busy'
+      if @logged_driver
+        request = request_json("http://localhost:3001/driver_locations")
+        @notification = false
+        request.each do |driver_location|
+          @notification = driver_location if driver_location['driver_id'] == session['driver_id'] && driver_location['status'] == 'busy'
+        end
       end
     end
 

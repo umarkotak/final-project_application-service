@@ -9,6 +9,8 @@ class DriversController < ApplicationController
   end
 
   def show
+    request = request_json("http://localhost:3001/driver_locations")
+    @driver_location = request.find{ |hash| hash['driver_id'].to_i == session[:driver_id] }
   end
 
   def new
