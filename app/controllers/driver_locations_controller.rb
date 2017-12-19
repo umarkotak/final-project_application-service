@@ -1,4 +1,6 @@
 class DriverLocationsController < ApplicationController
+  include Tools
+
   before_action :initiate_kafka, only: [:create, :destroy]
   before_action :set_driver_location, only: [:create, :micro_create]
 
@@ -57,18 +59,5 @@ class DriverLocationsController < ApplicationController
 
     def driver_location_params
       params.require(:driver_location).permit(:driver_id, :location, :lat, :lng, :status)
-    end
-
-    def initiate_kafka
-      @kafka = Kafka.new(
-        seed_brokers: ['127.0.0.1:9092'],
-        client_id: 'goride',
-      )
-      @message = {}
-    end
-
-    def request_json(url)
-      request = HTTP.get(url).to_s
-      request = JSON.parse(request)
     end
 end

@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Tools
+
   before_action :authorize
   before_action :set_logged_user
   before_action :set_logged_driver
@@ -28,10 +30,5 @@ class ApplicationController < ActionController::Base
           @notification = driver_location if driver_location['driver_id'] == session['driver_id'] && driver_location['status'] == 'busy'
         end
       end
-    end
-
-    def request_json(url)
-      request = HTTP.get(url).to_s
-      request = JSON.parse(request)
     end
 end

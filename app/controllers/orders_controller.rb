@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  include Tools
+
   before_action :set_order, only: [:destroy]
   before_action :initiate_kafka, only: [:micro_order]
   skip_before_action :verify_authenticity_token, only: [:micro_order]
@@ -88,14 +90,6 @@ class OrdersController < ApplicationController
 
     def order_params
       params.require(:order).permit(:user_id, :driver_id, :origin, :destination, :distance, :service_type, :payment_type, :price, :status)
-    end
-
-    def initiate_kafka
-      @kafka = Kafka.new(
-        seed_brokers: ['127.0.0.1:9092'],
-        client_id: 'goride',
-      )
-      @message = {}
     end
 end
 
