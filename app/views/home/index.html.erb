@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div>
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <%= image_tag 'h1.jpg', alt: "Simplified Go Food" %>
+        <div class="carousel-caption">
+          <h3>GOJEK</h3>
+          <p>Aplikasi karya anak bangsa</p>
+        </div>
+      </div>
+
+      <div class="item">
+        <%= image_tag 'h2.jpg', alt: "Simplified Go Food" %>
+        <div class="carousel-caption">
+          <h3>AGILE</h3>
+          <p>Cepat dalam segala hal</p>
+        </div>
+      </div>
+    
+      <div class="item">
+        <%= image_tag 'h3.jpg', alt: "Simplified Go Food" %>
+        <div class="carousel-caption">
+          <h3>GLOBAL</h3>
+          <p>It's everyone needs</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+</body>
+</html>

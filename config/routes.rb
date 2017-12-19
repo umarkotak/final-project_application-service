@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  root 'sessions#new' 
+  # root 'sessions#new' 
+  get '/home' => 'home#index'
+  root 'home#index'
 
   controller :sessions do
     get 'login' => :new

@@ -36,6 +36,7 @@
           </ul>
           <h5>Menu</h5>
           <ul>
+            <li><a href="/home" class="btn btn-success btn-xs btn-block">Home</a></li>
             <li><%= link_to 'My Profile', user_path(session[:user_id]), class: 'btn btn-primary btn-xs btn-block' %></a></li>
             <li><%= link_to 'Order Go Ride', new_order_path, class: 'btn btn-primary btn-xs btn-block' %></li>
             <li> </li>
@@ -62,6 +63,7 @@
           </ul>
           <h5>Menu</h5>
           <ul>
+            <li><a href="/home" class="btn btn-success btn-xs btn-block">Home</a></li>
             <li><%= link_to 'My Profile', driver_path(session[:driver_id]), class: 'btn btn-primary btn-xs btn-block' %></li>
             <li><%= link_to 'My Jobs', job_driver_path(session[:driver_id]), class: 'btn btn-primary btn-xs btn-block' %></li>
             <li><%= link_to 'Set Location', driver_locations_path, class: 'btn btn-primary btn-xs btn-block' %></li>
@@ -72,6 +74,7 @@
         <% else %>
           <h5>Menu</h5>
           <ul>
+            <li><a href="/home" class="btn btn-success btn-xs btn-block">Home</a></li>
             <li><a href="/login" class="btn btn-primary btn-xs btn-block">Login</a></li>
             <li><a href="/login_driver" class="btn btn-primary btn-xs btn-block">Login Driver</a></li>
           </ul>
