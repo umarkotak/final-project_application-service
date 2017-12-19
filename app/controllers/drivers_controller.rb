@@ -83,6 +83,8 @@ class DriversController < ApplicationController
       if @order.save
         @message[:action] = 'set_driver_location_done'
         @message[:driver_id] = session[:driver_id]
+        @message[:location] = @order.destination
+        @message[:coordinate] = get_coordinate(@order.destination)
         @kafka.deliver_message("#{@message}", topic: 'driver_location')
         
         format.html { redirect_to job_driver_path(session[:driver_id]), notice: "Order #{@order.status}" }
@@ -120,5 +122,18 @@ class DriversController < ApplicationController
     def request_json(url)
       request = HTTP.get(url).to_s
       request = JSON.parse(request)
+    end
+
+    def apikey
+      "AIzaSyAxXs-AipMveHRNInl7P3HubboAWgK4aqU"
+    end
+
+    def get_coordinate(location_name)
+      result = {}
+      request = request_json("https://maps.googleapis.com/maps/api/geocode/json?address=#{location_name.gsub(' ','+')}+&key=#{apikey}")
+
+      result[:lat] = request["results"][0]["geometry"]["location"]["lat"]
+      result[:lng] = request["results"][0]["geometry"]["location"]["lng"]
+      result
     end
 end
