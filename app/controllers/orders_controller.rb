@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new
     @any_order = Order.where("user_id = '#{session[:user_id]}'").find_by(status: 'on_process')
+    @driver = Driver.find(@any_order.driver_id) if @any_order
   end
 
   def confirm_order

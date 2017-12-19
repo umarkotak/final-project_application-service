@@ -9,6 +9,14 @@
   </head>
 
   <body class="<%= controller.controller_name %>">
+    <% if @logged_driver && @notification %>
+      <div style="background-color: #ff4d4d; padding: 5px; border-radius: 5px; margin: 3px 0;">
+        <div style="text-align: center; color: white">
+          There is a new job for you! 
+        </div>
+      </div>
+    <% end %>
+
     <div id="banner">
       <%= image_tag 'logo.jpg', alt: "Simplified Go Food" %>
       <span class="title"><%= @page_title %></span>
