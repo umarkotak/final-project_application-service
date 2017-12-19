@@ -55,5 +55,7 @@ class Driver < ApplicationRecord
       user.save
       driver.save
     end
+
+    # working on moving driver after complete job
   end
 end
