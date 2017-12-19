@@ -27,7 +27,7 @@
             <td><%= user.email %></td>
             <td><%= user.phone %></td>
             <td><%= user.address %></td>
-            <td><%= user.credit %></td>
+            <td><%= number_to_currency(user.credit, unit: "Rp. ", delimiter: ".", separator: ",") %></td>
             <td><%= link_to 'Show', user, class: 'btn btn-primary btn-xs' %></td>
             <td><%= link_to 'Edit', edit_user_path(user), class: 'btn btn-primary btn-xs' %></td>
             <td><%= link_to 'Top Up', topup_user_path(user), class: 'btn btn-primary btn-xs' %></td>

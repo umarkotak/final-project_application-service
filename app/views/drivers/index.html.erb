@@ -29,7 +29,7 @@
             <td><%= driver.phone %></td>
             <td><%= driver.address %></td>
             <td><%= driver.service_type %></td>
-            <td><%= driver.credit %></td>
+            <td><%= number_to_currency(driver.credit, unit: "Rp. ", delimiter: ".", separator: ",") %></td>
             <td><%= link_to 'Show', driver, class: 'btn btn-primary btn-xs' %></td>
             <td><%= link_to 'Edit', edit_driver_path(driver), class: 'btn btn-primary btn-xs' %></td>
             <td><%= link_to 'Top Up', topup_driver_path(driver), class: 'btn btn-primary btn-xs' %></td>

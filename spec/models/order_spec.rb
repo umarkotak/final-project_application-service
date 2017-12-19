@@ -76,14 +76,14 @@ RSpec.describe Order, type: :model do
     it "can calculate distance" do
       distance_matrix = @order.validate_route(@order.origin, @order.destination)
       @order.set_distance(distance_matrix)
-      expect(@order.distance.to_f).to eq(20.04)
+      expect(@order.distance.to_f).to eq(20.03)
     end
 
     it "can calculate price" do
       distance_matrix = @order.validate_route(@order.origin, @order.destination)
       @order.set_distance(distance_matrix)
       @order.set_price
-      expect(@order.price.to_f).to eq(30060.0)
+      expect(@order.price.to_f).to eq(30045.0)
     end
 
     it "can check if user gopay is sufficient" do

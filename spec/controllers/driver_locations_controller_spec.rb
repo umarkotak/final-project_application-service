@@ -28,18 +28,14 @@ RSpec.describe DriverLocationsController, type: :controller do
     end
   end
 
-  # describe "POST #create" do
-  #   it "set the driver location to the database" do
-  #     new_driver = create(:driver, username: 'driverr2')
-  #     session[:driver_id] = new_driver
-  #     expect {
-  #       post :create, params: { driver_location: attributes_for(:driver_location, driver: new_driver, location: 'jakarta') }
-  #     }.to change(DriverLocation, :count).by(1)
-  #   end
+  describe "POST #create" do
+    it "produce a message to allocation service" do
+      
+    end
 
-  #   it "redirect to driver locations path" do
-  #     post :create, params: { driver_location: attributes_for(:driver_location, driver: @driver) }
-  #     expect(response).to redirect_to(driver_locations_path)
-  #   end
-  # end
+    it "redirect to driver locations path" do
+      post :create, params: { driver_location: attributes_for(:driver_location, driver: @driver) }
+      expect(response).to redirect_to(driver_locations_path)
+    end
+  end
 end

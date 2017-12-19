@@ -31,7 +31,7 @@
           </tr>
           <tr>
             <td><strong>Credit:</strong></td>
-            <td><%= @user.credit %></td>
+            <td><%= number_to_currency(@user.credit, unit: "Rp. ", delimiter: ".", separator: ",") %></td>
           </tr>
         </table>
       </div>
@@ -78,7 +78,7 @@
             <td><%= order.distance %></td>
             <td><%= order.service_type %></td>
             <td><%= order.payment_type %></td>
-            <td><%= order.price %></td>
+            <td><%= number_to_currency(order.price, unit: "Rp. ", delimiter: ".", separator: ",") %></td>
             <td>
               <% if order.status == 'completed' %>
                 <span class="label label-success"><%= order.status %><span>
