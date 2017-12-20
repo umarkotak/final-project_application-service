@@ -35,7 +35,7 @@
               <td><%= @order.try(:service_type) %></td>
               <td><%= @order.try(:payment_type) %></td>
               <td><%= @order.try(:price) %></td>
-              <td><%= @order.try(:status) %></td>
+              <td><span class="label label-warning"><%= @order.try(:status) %><span></td>
             </tr>
           </tbody>
         </table>

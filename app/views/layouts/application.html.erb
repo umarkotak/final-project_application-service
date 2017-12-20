@@ -10,12 +10,8 @@
 
   <body class="<%= controller.controller_name %>">
     <% if @notification %>
-      <a href="<%= job_driver_path(session[:driver_id]) %>">
-        <div style="background-color: #ff4d4d; padding: 5px; border-radius: 5px; margin: 3px 0;">
-          <div style="text-align: center; color: white">
-            There is a new job for you! 
-          </div>
-        </div>
+      <a href="<%= job_driver_path(session[:driver_id]) %>" class="btn btn-danger btn-block">
+        There is a new job waiting for you
       </a>
     <% end %>
 
