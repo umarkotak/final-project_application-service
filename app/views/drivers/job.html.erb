@@ -94,6 +94,8 @@
               <td>
                 <% if order.try(:status) == 'completed' %>
                   <span class="label label-success"><%= order.try(:status) %><span>
+                <% elsif order.status == 'on_process' %>
+                  <span class="label label-warning"><%= order.try(:status) %><span>
                 <% else %>
                   <span class="label label-danger"><%= order.try(:status) %><span>
                 <% end %>

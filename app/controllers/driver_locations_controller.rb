@@ -2,7 +2,7 @@ class DriverLocationsController < ApplicationController
   include Tools
 
   before_action :initiate_kafka, only: [:create, :destroy]
-  before_action :set_driver_location, only: [:create, :micro_create]
+  before_action :set_driver_location, only: [:create]
 
   def index
     request = request_json("http://localhost:3001/driver_locations")

@@ -28,7 +28,7 @@ RSpec.describe SessionsController, type: :controller do
 
       it "redirects to users_path" do
         post :create, params: { username: 'umarkotak', password: 'umarkotak' }
-        expect(response).to redirect_to users_path
+        expect(response).to redirect_to user_path(@umarkotak)
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe SessionsController, type: :controller do
 
       it "redirects to drivers_path" do
         post :create_driver, params: { username: 'umarkotakd', password: 'umarkotak' }
-        expect(response).to redirect_to drivers_path
+        expect(response).to redirect_to driver_path(@umarkotakd)
       end
     end
 

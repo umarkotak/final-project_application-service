@@ -89,9 +89,9 @@ class DriversController < ApplicationController
 
       @message[:location] = @order.destination
       @message[:coordinate] = get_coordinate(@order.destination)
+      @message[:order_status] = 'completed'
     else
-      @message[:location] = @order.origin
-      @message[:coordinate] = get_coordinate(@order.origin)
+      @message[:order_status] = 'canceled'
     end
 
     respond_to do |format|

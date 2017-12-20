@@ -29,12 +29,30 @@ RSpec.describe DriverLocationsController, type: :controller do
   end
 
   describe "POST #create" do
+    it "produce a message with action set_driver_location" do
+      post :create, params: { driver_location: attributes_for(:driver_location, driver_id: @driver.id, location: 'jakarta') }
+      expect(assigns(:message)[:action]).to eq('set_driver_location')
+    end
+
     it "produce a message to allocation service" do
-      
+      post :create, params: { driver_location: attributes_for(:driver_location, driver_id: @driver.id, location: 'jakarta') }
+      expect(assigns(:message)[:driver_location][:driver_id]).to eq(@driver.id)
     end
 
     it "redirect to driver locations path" do
-      post :create, params: { driver_location: attributes_for(:driver_location, driver: @driver) }
+      post :create, params: { driver_location: attributes_for(:driver_location, driver_id: @driver.id, location: 'jakarta') }
+      expect(response).to redirect_to(driver_locations_path)
+    end
+  end
+
+  describe "DELETE #destroy" do
+    it "produce a message with action unset_driver_location" do
+      delete :destroy, params: { id: @driver.id }
+      expect(assigns(:message)[:action]).to eq('unset_driver_location')
+    end
+
+    it "redirect to driver locations path" do
+      delete :destroy, params: { id: @driver.id }
       expect(response).to redirect_to(driver_locations_path)
     end
   end

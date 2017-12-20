@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     if user.try(:authenticate, params[:password])
       session[:user_id] = user.id
       session[:driver_id] = nil
-      redirect_to users_path
+      redirect_to user_path(user.id)
     else
       redirect_to login_path, alert:"invalid username/password combination"
     end
@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
     if driver.try(:authenticate, params[:password])
       session[:driver_id] = driver.id
       session[:user_id] = nil
-      redirect_to drivers_path
+      redirect_to driver_path(driver.id)
     else
       redirect_to login_driver_path, alert:"invalid driver username/password combination"
     end

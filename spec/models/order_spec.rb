@@ -74,22 +74,62 @@ RSpec.describe Order, type: :model do
     end
 
     it "can calculate distance" do
+      @order.origin = 'kolla sabang'
+      @order.origin = 'sarinah'
       distance_matrix = @order.validate_route(@order.origin, @order.destination)
       @order.set_distance(distance_matrix)
-      expect(@order.distance.to_f).to eq(20.03)
+      expect(@order.distance.to_f).to eq(12.34)
     end
 
     it "can calculate price" do
+      @order.origin = 'kolla sabang'
+      @order.origin = 'sarinah'
       distance_matrix = @order.validate_route(@order.origin, @order.destination)
       @order.set_distance(distance_matrix)
       @order.set_price
-      expect(@order.price.to_f).to eq(30045.0)
+      expect(@order.price.to_f).to eq(18510.0)
     end
 
     it "can check if user gopay is sufficient" do
       user = create(:user, username: 'umarkotak')  
       @order.price = 65000
       expect(@order.check_gopay(user)).to eq(false)
+    end
+
+    it "can asign itself from temporary data" do
+      temp_data = {
+        "user_id" => 1,
+        "driver_id" => 1,
+        "origin" => 'jakarta',
+        "destination" => 'sarinah',
+        "distance" => 5,
+        "service_type" => 'gojek',
+        "price" => 7500
+      }
+      @order.set_order_data(temp_data)
+      expect(@order.user_id).to eq(1)
+    end
+
+    describe "check from routes cached service" do
+      it "will get from cached routes if available" do
+        @order.origin = 'jakarta'
+        @order.destination = 'kemang'
+        expect(@order.get_cached_routes).not_to be_empty 
+      end
+      
+      it "will not get from cached routes if unavailable" do
+        @order.origin = 'surakarta'
+        @order.destination = 'stasiun balapan'
+        expect(@order.get_cached_routes).to eq(false) 
+      end
+    end
+
+    describe "setting post routes data to routes cached service" do
+      it "will send routes data" do
+        @order.origin = 'surakarta'
+        @order.destination = 'stasiun balapan'
+        expect(@order.set_cached_routes).not_to have_http_status(200)
+      end
     end
   end
 end

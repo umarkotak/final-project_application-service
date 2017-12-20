@@ -82,6 +82,8 @@
             <td>
               <% if order.status == 'completed' %>
                 <span class="label label-success"><%= order.status %><span>
+              <% elsif order.status == 'on_process' %>
+                <span class="label label-warning"><%= order.status %><span>
               <% else %>
                 <span class="label label-danger"><%= order.status %><span>
               <% end %>
