@@ -31,12 +31,14 @@ RSpec.describe OrdersController, type: :controller do
   end
 
   describe "GET #confirm_order" do
-    it "show the location confirmation" do
-      
+    it "show the location confirmation if status true" do
+      get :confirm_order, params: { order: attributes_for(:order, origin: 'jakarta', destination: 'kemang', service_type: 'gojek') }
+      expect(assigns(:status)).to eq(true)
     end
 
     it "renders the :confirm_order template" do
-      
+      get :confirm_order, params: { order: attributes_for(:order, origin: 'jakarta', destination: 'kemang', service_type: 'gojek') }
+      expect(response).to render_template :confirm_order
     end
   end
 
@@ -45,6 +47,16 @@ RSpec.describe OrdersController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    
+    it "deletes order from the database" do
+      order = create(:order, user: @user, driver: @driver)
+      expect{
+        delete :destroy, params: { id: order }
+      }.to change(Order, :count).by(-1)
+    end
+    it "redirects to order#index" do
+      order = create(:order, user: @user, driver: @driver)
+      delete :destroy, params: { id: order }
+      expect(response).to redirect_to orders_path
+    end
   end
 end

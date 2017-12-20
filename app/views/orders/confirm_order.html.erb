@@ -6,7 +6,7 @@
   </div>
 
   <div class="panel-body">
-    <%= form_for @order, url: {action: 'micro_order'} do |form| %>
+    <%= form_for @order, url: {action: 'create'} do |form| %>
       <% if @status || @driver %>
         <div class="form-group">
           <table class="table">

@@ -2,8 +2,8 @@ class OrdersController < ApplicationController
   include Tools
 
   before_action :set_order, only: [:destroy]
-  before_action :initiate_kafka, only: [:micro_order]
-  skip_before_action :verify_authenticity_token, only: [:micro_order]
+  before_action :initiate_kafka, only: [:create]
+  skip_before_action :verify_authenticity_token, only: [:create]
 
   def index
     @orders = Order.all.order(id: :desc)
@@ -44,7 +44,7 @@ class OrdersController < ApplicationController
     end
   end
 
-  def micro_order
+  def create
     @message[:action] = 'get_driver'
 
     @temp_data = session[:temp_data]

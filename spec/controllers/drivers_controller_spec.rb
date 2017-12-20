@@ -155,13 +155,6 @@ RSpec.describe DriversController, type: :controller do
   end
 
   describe "GET #job" do
-    # it "assign current job if exist" do
-    #   order = create(:order, driver: @driver)
-    #   driver_location = create(:driver_location, driver: @driver, order: order)
-    #   get :job, params: { id: @driver }
-    #   expect(assigns(:order)).to eq(order)
-    # end
-
     it "will populates jobs history" do
       order = create(:order, driver: @driver)
       get :job, params: { id: @driver }
@@ -173,28 +166,4 @@ RSpec.describe DriversController, type: :controller do
       expect(response).to render_template :job
     end
   end
-
-  # describe "POST #do_job" do
-  #   it "will execute the transaction if completed" do
-  #     driver = create(:driver, username: 'umarkotakd2')
-  #     order = create(:order, driver: driver, price: 5000, payment_type: 'gopay')
-  #     driver_location = create(:driver_location, driver: driver, order: order)
-
-  #     post :do_job, params: { driver: driver }
-  #     driver.reload
-  #     expect(driver.credit).to eq(55000)
-  #   end
-
-  #   it "will change the driver_location order_id to be nil" do
-      
-  #   end
-
-  #   it "will change the driver_location status to be online" do
-      
-  #   end
-
-  #   it "will complete the order" do
-      
-  #   end
-  # end
 end

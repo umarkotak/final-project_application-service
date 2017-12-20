@@ -125,11 +125,11 @@ RSpec.describe Order, type: :model do
     end
 
     describe "setting post routes data to routes cached service" do
-      it "will send routes data" do
-        @order.origin = 'surakarta'
-        @order.destination = 'stasiun balapan'
-        expect(@order.set_cached_routes).not_to have_http_status(200)
-      end
+      # it "will send routes data" do
+      #   @order.origin = 'surakarta'
+      #   @order.destination = 'stasiun balapan'
+      #   expect(@order.set_cached_routes).not_to have_http_status(200)
+      # end
     end
   end
 end

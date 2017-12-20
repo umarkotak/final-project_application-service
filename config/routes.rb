@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
   controller :orders do
     get 'orders/confirm_order' => :confirm_order
-    post 'orders/micro_order' => :micro_order
+    # post 'orders/micro_order' => :micro_order
   end
   resources :orders
 

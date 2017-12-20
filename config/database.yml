@@ -38,4 +38,4 @@ development:
 
 test:
   <<: *default
-  database: goride
+  database: test_goride
