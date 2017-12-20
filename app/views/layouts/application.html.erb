@@ -46,7 +46,7 @@
             <li><%= link_to 'My Profile', user_path(session[:user_id]), class: 'btn btn-primary btn-xs btn-block' %></a></li>
             <li><%= link_to 'Order Go Ride', new_order_path, class: 'btn btn-primary btn-xs btn-block' %></li>
             <li> </li>
-            <li><%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger btn-xs btn-block' %></li>
+            <li><%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger btn-xs btn-block', data: { confirm: 'Are you sure?' } %></li>
           </ul>
 
         <% elsif session[:driver_id] && @logged_driver %>
@@ -73,7 +73,7 @@
             <li><%= link_to 'My Profile', driver_path(session[:driver_id]), class: 'btn btn-primary btn-xs btn-block' %></li>
             <li><%= link_to 'My Jobs', job_driver_path(session[:driver_id]), class: 'btn btn-primary btn-xs btn-block' %></li>
             <li> </li>
-            <li><%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger btn-xs btn-block' %></li>
+            <li><%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger btn-xs btn-block', data: { confirm: 'Are you sure?' } %></li>
           </ul>
 
         <% else %>
