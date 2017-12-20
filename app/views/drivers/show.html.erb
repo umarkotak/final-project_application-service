@@ -95,6 +95,11 @@
       <% if @driver_location['status'] != 'busy' %>
         <div class="panel-footer">
           <%= link_to "Set My Location", new_driver_location_path, class: 'btn btn-primary btn-sm' %>
+          <%= link_to 'Unset', "/driver_locations/#{@driver_location['driver_id']}", method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+        </div>
+      <% else %>
+        <div class="panel-footer">
+          <p style="color: red;"><b>Please complete your order first before set a new location</b></p>
         </div>
       <% end %>
     </div>

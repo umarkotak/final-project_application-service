@@ -72,7 +72,6 @@
             <li><a href="/home" class="btn btn-success btn-xs btn-block">Home</a></li>
             <li><%= link_to 'My Profile', driver_path(session[:driver_id]), class: 'btn btn-primary btn-xs btn-block' %></li>
             <li><%= link_to 'My Jobs', job_driver_path(session[:driver_id]), class: 'btn btn-primary btn-xs btn-block' %></li>
-            <li><%= link_to 'Set Location', driver_locations_path, class: 'btn btn-primary btn-xs btn-block' %></li>
             <li> </li>
             <li><%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger btn-xs btn-block' %></li>
           </ul>
@@ -91,6 +90,7 @@
           <li><a href="/users" class="btn btn-primary btn-xs btn-block">User</a></li>
           <li><a href="/drivers" class="btn btn-primary btn-xs btn-block">Driver</a></li>
           <li><a href="/orders" class="btn btn-primary btn-xs btn-block">Order</a></li>
+          <li><a href="/driver_locations" class="btn btn-primary btn-xs btn-block">Driver Location</a></li>
         </ul>
       </div>
 

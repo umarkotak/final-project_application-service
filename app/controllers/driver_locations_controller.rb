@@ -37,7 +37,7 @@ class DriverLocationsController < ApplicationController
     respond_to do |format|
       if @driver_location.valid?
         @kafka.deliver_message("#{@message}", topic: 'driver_location')
-        format.html { redirect_to driver_locations_path, notice: 'Driver was successfully created.' }
+        format.html { redirect_to driver_path(session[:driver_id]), notice: 'Your location has been updated' }
       else
         format.html { render :new }
       end
@@ -49,7 +49,7 @@ class DriverLocationsController < ApplicationController
     @message[:driver_id] = params[:id]
     @kafka.deliver_message("#{@message}", topic: 'driver_location')
 
-    redirect_to driver_locations_url, notice: 'driver location was successfully unsetted.'
+    redirect_to driver_path(session[:driver_id]), notice: 'driver location was successfully unsetted.'
   end
 
   private
